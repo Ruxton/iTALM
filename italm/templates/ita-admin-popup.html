@@ -1,0 +1,55 @@
+		<div class="hidden">
+			<div id="ita-dialog">
+				<div class="ita-dialog-content">
+                                    <div class="inside">
+					<div id="ita-dialog-message"></div>
+					<form action="" method="POST" target="itms-link-maker">
+                                            <input type="hidden" name="ita-omg" id="ita-omg" />
+                                            <?php $checked = ita::setting('ita-defaultalbfix') == '1' ? ' CHECKED' : '' ?>
+    <p><label for="ita-album-only">Correct Album URL:</label> <input type="checkbox" id="ita-album-only" name="ita-album-only" value="1" tabindex="24"<?=$checked?> /></p>
+
+    <table width="700" border="0" cellspacing="2" cellpadding="0" id="ita-table">
+        <tbody>
+        <tr>
+            <td width="180"><strong>Country</strong></td>
+            <td width="180"><strong>Search</strong></td>
+            <td width="180"><strong>Media Type</strong></td>
+            <td width="90"></td>
+        </tr>
+        <tr>
+            <td><select name="ita-country" id="ita-country" tabindex="21" >
+                <?php
+                    $selectedCountry = ita::setting('ita-defaultcountry');
+                    foreach(itms::$countries as $code=>$country)
+                    {
+                        ?>
+                        <option <?=$selectedCountry == $code ? 'SELECTED ': '' ?>value="<?=$code?>"><?=$country?></option>
+                        <?php
+                    }
+                ?>
+            </select></td>
+
+            <td><input type="text" value="" name="ita-term" id="ita-term" tabindex="22"/></td>
+            <td><select name="ita-media" id="ita-media" tabindex="23">
+                <?php
+                    $selectedMedia = ita::setting('ita-defaultmedia');
+                    foreach(itms::$media as $code=>$media)
+                    {
+                        ?>
+                        <option <?=$selectedMedia == $code ? 'SELECTED ': '' ?>value="<?=$code?>"><?=$media?></option>
+                        <?php
+                    }
+                ?>
+            </select></td>
+            <td align="right"><input type="submit" value="Search" class="button-secondary action" tabindex="25" /></TD>
+        </tr>
+            </tbody>
+    </table>
+
+
+                                        </form>
+                                        <iframe name="itms-link-maker" id="itms-link-maker" width="700" height="260" scrolling="no" ></iframe>
+                                    </div>
+				</div>
+			</div>
+		</div>
