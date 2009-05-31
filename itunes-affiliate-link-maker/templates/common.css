@@ -1,0 +1,35 @@
+body,html {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table.ita-results th {
+    text-align: left;
+    padding-top: 8px;
+    padding-bottom: 2px;
+}
+
+table.ita-results td {
+	padding: 4px;
+	text-align: left;
+	color: #666699;
+	font-size: 10px;
+        height: 20px;
+}
+
+table.ita-results td a {
+	color: #666699;
+}
+
+table.ita-results td.odd {
+	background-color: #e8edff;
+}
+
+#ita-results-scroll {
+    height: 200px;
+    overflow: auto;
+}
