@@ -34,28 +34,65 @@ class ita {
 		add_action('admin_init', array(&$this, 'ita_handle_search'));
 	}
 
+	function italm_install( )
+	{
+		global $wpdb;
+
+		// Build table name with prefix
+		$tableName = $wpdb->prefix . "italm";
+
+		// Check to see if table exists firsts.
+		if($wpdb->get_var("SHOW TABLES LIKE '$tableName'") != $tableName)
+		{
+			$sql = "CREATE TABLE " . $tableName . " (
+				  linkid mediumint(9) NOT NULL AUTO_INCREMENT,
+				  updateTime bigint(11) DEFAULT '0' NOT NULL,
+				  linkName text NOT NULL,
+				  linkUrl VARCHAR(300) NOT NULL,
+				  UNIQUE KEY linkid (linkid)
+				);";
+
+			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			dbDelta($sql);
+
+		}
+		else
+		{
+		}
+	}
+
 	/**
 	 * Runs when you uninstall the plugin from wordpress or have the cleanup on de-activation box checked
 	 * @global <type> $wpdb
 	 */
-	function ita_uninstall()
+	function italm_uninstall()
 	{
 		global $wpdb;
+
+		$tableName = $wpdb->prefix . "italm";
+
 		foreach(ita::$defaultSettings as $key=>$setting )
 		{
 			$option_name = $key;
 			$wpdb->query( $wpdb->prepare( "DELETE FROM wp_options WHERE option_name = %s;",$option_name ) );
+		}
+		
+		if($wpdb->get_var("SHOW TABLES LIKE '$tableName'") == $tableName)
+		{
+			$sql = "DROP TABLE " . $tableName . ";";
+			//require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			$wpdb->query($sql);
 		}
 	}
 
 	/**
 	 * Runs when you have the cleanup on de-activation box checked and runs uninstall.
 	 */
-	function ita_deactivate( )
+	function italm_deactivate( )
 	{
 		if(ita::setting('ita-cleanup') == 1)
 		{
-			$this->ita_uninstall( );
+			$this->italm_uninstall( );
 		}
 	}
 

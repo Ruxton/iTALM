@@ -1,4 +1,4 @@
-function sendToEditor(stuff,imglink)
+function italm_sendToEditor(stuff,imglink,thestr)
 {
 	var title = prompt("Please enter a title for the link","");	
 	var text = '<a href="'+stuff+'" title="'+title+'">';	
@@ -26,4 +26,20 @@ function sendToEditor(stuff,imglink)
 	top.jQuery("#ita-dialog").dialog("close");	
 	
 	return false;
+}
+
+function italm_linkIt( thestr, thelink )
+{
+   var mysack = new sack(
+       "<?php bloginfo( 'wpurl' ); ?>/wp-content/plugins/itunes-affiliate-link-maker/italm-ajax.php" );
+
+  mysack.execute = 1;
+  mysack.method = 'POST';
+  mysack.setVar( "linkname", thestr );
+  mysack.setVar( "linkurl", thelink );
+  mysack.onError = function() { alert('Ajax error in history log' )};
+  mysack.runAJAX();
+
+  return true;
+
 }

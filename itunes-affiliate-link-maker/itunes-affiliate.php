@@ -5,7 +5,7 @@ Plugin URI:		http://ignite.digitalignition.net/articlesexamples/itunes-affiliate
 Description:	Easily create links to the iTunes store with or without affiliate id's
 Author:			Greg Tangey
 Author URI:		http://ignite.digitalignition.net/
-Version:		0.2.2
+Version:		0.2.3
 */
 
 /*  Copyright 2009  Greg Tangey  (email : greg@digitalignition.net)
@@ -36,6 +36,7 @@ function ita_getDisplayTemplate($file) {
         return dirname(__FILE__).'/templates/'.$file;
     }
 }
+
 
 function ita_link($atts, $content = null )
 {
@@ -77,9 +78,11 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
 
 	$ita =& new ita();
 
-    if(ita::setting('ita-cleanup') != '1')
-		register_deactivation_hook(__FILE__, array(&$ita,'ita_deactivate'));
-	register_uninstall_hook(__FILE__,array(&$ita,('ita_uninstall')));
+    if(ita::setting('ita-cleanup') == '1')
+		register_deactivation_hook(__FILE__, array(&$ita,'italm_deactivate'));
+		
+	register_uninstall_hook(__FILE__,array(&$ita,'italm_uninstall'));
+	register_activation_hook(__FILE__,array(&$ita,'italm_install'));
 
 
 	$plugin_dir = basename(dirname(__FILE__));
