@@ -1,1 +1,2 @@
-glob:build/
+syntax:glob
+build/*/

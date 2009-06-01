@@ -76,9 +76,12 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     require_once(dirname(__FILE__).'/ita.class.admin.php');
 
 	$ita =& new ita();
-	
+
     if(ita::setting('ita-cleanup') != '1')
 		register_deactivation_hook(__FILE__, array(&$ita,'ita_deactivate'));
 	register_uninstall_hook(__FILE__,array(&$ita,('ita_uninstall')));
-    
+
+
+	$plugin_dir = basename(dirname(__FILE__));
+	load_plugin_textdomain( 'italm', '', $plugin_dir );
 }

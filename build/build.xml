@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="italm" default="init" basedir="../">
+
+
+    <!-- Relative to basedir  -->
+    <property name="builddir" value="build/dev/" />
+    
+	<!-- Relative to basedir -->
+    <property name="devdir" value="../wordpress/wp-content/plugins/itunes-affiliate-link-maker/" />
+
+	<property name="plugindir" value="itunes-affiliate-link-maker/" />
+
+	<target name="init">
+		<echo />
+	</target>
+	<target name="devtest">
+		<echo message="Setting up dev environment.." />
+		<copy todir="${devdir}">
+			<fileset dir="${plugindir}">
+			</fileset>
+		</copy>
+		<echo message="Setup complete, running.." />
+	</target>
+	<target name="build">
+		<echo message="Creating a new build.." />
+		<copy todir="${buildir}">
+			<fileset dir="${plugindir}">
+			</fileset>
+		</copy>
+	</target>
+</project>

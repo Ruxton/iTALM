@@ -9,9 +9,9 @@
 <body>
 <table class="ita-results" id="ita-results-head" width="100%">
     <tr>
-            <th scope="col" width="227">Name</th>
-            <th scope="col" width="221">Album</th>
-            <th scope="col">Artist</th>
+			<th scope="col" width="227"><?php _e("Name"); ?></th>
+            <th scope="col" width="221"><?php _e("Album"); ?></th>
+            <th scope="col"><?php _e("Artist"); ?></th>
     </tr>
 </table>
     <div id="ita-results-scroll">
@@ -21,7 +21,7 @@ if(sizeof($resArr) < 1)
 {
     ?>
         <tr>
-            <td class="odd" colspan="3">No result for the term: '<?=$term?>'</td>
+            <td class="odd" colspan="3"><?php printf( __("No result for the term: %s"),$term ); ?></td>
         </tr>
     <?php
 }
