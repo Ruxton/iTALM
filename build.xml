@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="italm" default="init" basedir=".">
+
+    <property file="italm.build.properties"/>
+
+
+	<target name="init">
+		<echo />
+	</target>
+	<target name="devtest">
+		<echo message="Setting up dev environment.." />
+		<copy todir="${dir.dev}">
+			<fileset dir="${dir.src}">
+			</fileset>
+		</copy>
+		<echo message="Setup complete, running.." />
+	</target>
+	<target name="build">
+		<echo message="Creating a new build.." />
+		<copy todir="${dir.build}">
+			<fileset dir="${dir.dev}">
+			</fileset>
+		</copy>
+	</target>
+</project>
