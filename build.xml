@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="italm" default="init" basedir=".">
-
+    <property environment="env"/>
     <property file="italm.build.properties"/>
 
 
