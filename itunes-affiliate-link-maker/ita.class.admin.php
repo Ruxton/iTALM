@@ -1,24 +1,5 @@
 <?php
-class ita {
-
-	//All the default settings that are used when none are stored in wp_options
-	public static $defaultSettings = array(
-		"ita-country" => "AU",
-		"ita-partner" => "",
-		"ita-defaultalbfix" => "1",
-		"ita-itmslm" => "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?WOURLEncoding=ISO8859_1&output=json",
-		"ita-defaultmedia" => "all",
-		"ita-cleanup" => "0",
-		"ita-linkimage" => "http://ax.itunes.apple.com/images/badgeitunes61x15dark.gif",
-	);
-
-	/**
-	 * Kind of an abstracted get_option, using the defaults above
-	 */
-	public static function setting( $key = '' )
-	{
-		return get_option($key,ita::$defaultSettings[$key]);
-	}
+class ita extends itabase {
 
 	/**
 	 * Constructor function, adds actions & filters for tinymce buttons, popup dialog,
@@ -39,38 +20,38 @@ class ita {
 
 	function italm_ajax_it( )
 	{
+		global $wpdb;
+
+		$tableName = $wpdb->prefix . 'italm';
+
 		$linkname = isset( $_POST['linkname'] ) ? $_POST['linkname'] : '';
 		$linkUrl = isset( $_POST['linkurl'] ) ? $_POST['linkurl'] : '';
 		$linkImage = isset( $_POST['linkimage'] ) ? $_POST['linkimage'] : '';
 
-		die( 'var title = prompt("Please enter a title for the link","");
-	if ( title == "" ) {
-		title = "'.$linkname.'";
-    }
-	var text = \'<a href="'.$linkUrl.'" title="\'+title+\'">\';
+		$linkResult = $wpdb->get_row('SELECT * FROM '.$tableName.' WHERE linkUrl = \''.$linkUrl.'\';', ARRAY_A);
+		
+		$maskedUrl = get_option('siteurl').'/'.ita::setting('ita-maskurl').'/%s';
 
-	if ( typeof top.tinyMCE != \'undefined\' && ( ed = top.tinyMCE.activeEditor ) && !ed.isHidden() ) {
-		var Selector = ed.selection
-		var sel = Selector.getSel();
-		if(sel != "") {
-			var text = text+sel+\'</a>\';
+		if(sizeof($linkResult) < 1 )
+		{
+			$wpdb->insert($tableName, array( 'linkName' => $linkname, 'linkUrl' => $linkUrl, 'updateTime' => time() ), array('%s','%s','%d') );
+			$linkResult = $wpdb->get_row('SELECT * FROM '.$tableName.' WHERE linkUrl = \''.$linkUrl.'\';', ARRAY_A);
 		}
 		else
 		{
-			var text = text+\'<img src="'.$linkImage.'" alt="\'+title+\'" ></a>\';
+			$wpdb->update($tableName, array( 'updateTime' => time() ), array( 'linkUrl' => $linkUrl ), array('%d'), array('%s') );
 		}
 
-		ed.focus();
-		if (top.tinymce.isIE)
-			ed.selection.moveToBookmark(tinymce.EditorManager.activeEditor.windowManager.bookmark);
+		if(ita::setting('ita-maskenable') == '1')
+		{
+			$maskedUrl = sprintf($maskedUrl, str_replace(' ', '_', $linkResult['linkName'] ) );
+		}
+		else
+		{
+			$maskedUrl = $linkUrl;
+		}
 
-		ed.execCommand(\'mceInsertContent\', false, text);
-	}
-	else {
-		alert(\'no\');
-	}
-	top.jQuery("#ita-dialog").dialog("close");
-');
+		die( 'top.itaToEditor(\''.$linkname.'\',\''.$maskedUrl.'\',\''.$linkImage.'\');top.jQuery("#ita-dialog").dialog("close");');
 	}
 
 	function italm_install( )
@@ -86,9 +67,10 @@ class ita {
 			$sql = "CREATE TABLE " . $tableName . " (
 				  linkid mediumint(9) NOT NULL AUTO_INCREMENT,
 				  updateTime bigint(11) DEFAULT '0' NOT NULL,
-				  linkName text NOT NULL,
+				  linkName VARCHAR(150) NOT NULL,
 				  linkUrl VARCHAR(300) NOT NULL,
-				  UNIQUE KEY linkid (linkid)
+				  PRIMARY KEY (`linkid`),
+				  UNIQUE KEY `linkName` (`linkName`)
 				);";
 
 			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -142,34 +124,45 @@ class ita {
 	 */
 	function ita_handle_search( )
 	{
-		if( isset( $_POST['ita-omg']))
+		global $wpdb;
+		$tableName = $wpdb->prefix.'italm';
+		if( isset( $_POST['ita-omg'] ) || isset( $_GET['ita-omg'] ) )
 		{
 			if(! isset( $_POST['ita-term'] ) )
+			{
+				$queryRes = $wpdb->get_results('SELECT * FROM '.$tableName.' ORDER BY updateTime DESC LIMIT 20',OBJECT );
+				if(sizeof($queryRes) < 1)
 					die('Error, no term');
-
-			if( isset($_POST['ita-album-only']))
-				$albumOnly = true;
+				else
+				{
+					include ita_getDisplayTemplate("itms-result-history.php");
+				}
+			}
 			else
-				$albumOnly = false;
+			{
+				if( isset($_POST['ita-album-only']))
+					$albumOnly = true;
+				else
+					$albumOnly = false;
 
-			if( isset($_POST['ita-media']))
-				$media = $_POST['ita-media'];
-			else
-				$media = 'all';
+				if( isset($_POST['ita-media']))
+					$media = $_POST['ita-media'];
+				else
+					$media = 'all';
 
-			if( isset($_POST['ita-country']))
-				$country = $_POST['ita-country'];
-			else
-				$country = ita::setting('ita_country');
+				if( isset($_POST['ita-country']))
+					$country = $_POST['ita-country'];
+				else
+					$country = ita::setting('ita_country');
 
 
-			$term = $_POST['ita-term'];
-			$itms = new itms( );
+				$term = $_POST['ita-term'];
+				$itms = new itms( );
 
-			$results = $itms->getResults($term,$media,$country);
-			$resArr = $results->results;
-
-			include ita_getDisplayTemplate("itms-results.php");
+				$results = $itms->getResults($term,$media,$country);
+				$resArr = $results->results;
+				include ita_getDisplayTemplate("itms-results.php");
+			}
 			exit;
 		}
 	}
@@ -186,6 +179,8 @@ class ita {
 		register_setting('ita-options','ita-defaultmedia');
 		register_setting('ita-options','ita-cleanup');
 		register_setting('ita-options','ita-linkimage');
+		register_setting('ita-options','ita-maskurl');
+		register_setting('ita-options','ita-maskenable');
 	}
 
 	/**
@@ -201,10 +196,10 @@ class ita {
 
 	// Load the TinyMCE plugin : editor_plugin.js (wp2.5)
 	function add_ita_tinymce_plugin($plugin_array) {
-            $plugin_array['ita'] = get_option('siteurl').'/wp-content/plugins/itunes-affiliate-link-maker/ita.js';
+            $plugin_array['ita'] = plugins_url('itunes-affiliate-link-maker/ita.js');
             return $plugin_array;
 	}
-	
+
 	/**
 	 * Outputs the jQuery Popup Dialog
 	 */
@@ -218,8 +213,13 @@ class ita {
 	 */
 	function ita_menus( )
 	{
-		add_options_page('iTunes Affiliate Link Maker', 'iTALM', 8, __FILE__, array(&$this,'ita_settings_page') );
+		$page = add_options_page('iTunes Affiliate Link Maker', 'iTALM', 8, __FILE__, array(&$this,'ita_settings_page') );
+		add_action( 'admin_print_scripts',array(&$this,'ita_admin_head'));
+	}
 
+	function ita_admin_head( )
+	{
+		wp_enqueue_script('ita-settings',plugins_url('itunes-affiliate-link-maker/ita-settings.js'));
 	}
 
 	/**

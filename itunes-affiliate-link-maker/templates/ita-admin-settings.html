@@ -6,6 +6,21 @@
 <form method="post" action="options.php">
 <?php settings_fields( 'ita-options' ); ?>
 <table class="form-table">
+	<?php
+		$maskChecked = '';
+		$maskDisabled = ' READONLY';
+		if( ita::setting('ita-maskenable') == 1)
+		{
+			$maskDisabled = '';
+			$maskChecked = ' CHECKED';
+		}
+	?>
+    <tr valign="top">
+        <th scope="row"><?php _e("Masking URL"); ?></th>
+        <td><input type="text" name="ita-maskurl" id="ita-maskurl" value="<?php echo ita::setting('ita-maskurl'); ?>"<?php echo $maskDisabled; ?>/><br/>
+			<input type="checkbox" name="ita-maskenable" id="ita-maskenable" value="1"<?php echo $maskChecked; ?>/>
+			<span class="setting-description"><?php _e("Mask links to your domain?"); ?><code>ie. /<?php echo ita::setting('ita-maskurl'); ?>/%linkname%</code></span></td>
+    </tr>
 
     <tr valign=top">
         <th scop="row"><?php _e("iTMS Link Generator URL"); ?></th>

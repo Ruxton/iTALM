@@ -36,7 +36,7 @@ else
     ?>
             <tr>
                     <td width="34%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->itemLinkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?= $result->artistName.'-'.$result->itemName ?>');return false;"><?=$result->itemName?></a></td>
-                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?= $albumOnly ? $realAlbumURL : $result->itemParentLinkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?= $result->artistName.'-'.$result->itemParentName ?>');return false;"><?=$result->itemParentName?></a></td>
+                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?= $albumOnly ? $realAlbumURL : $result->itemParentLinkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?= $result->artistName.'-'.$result->itemParentName.' (Album)' ?>');return false;"><?=$result->itemParentName?></a></td>
                     <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->artistLinkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?=$result->artistName?>');return false;"><?=$result->artistName?></a></td>
             </tr>
     <?php

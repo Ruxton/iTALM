@@ -28,6 +28,7 @@ Version:		0.2.3
 define('WP_DEBUG', true);
 
 include dirname(__FILE__)."/itms.php";
+require_once(dirname(__FILE__).'/ita.class.base.php');
 
 function ita_getDisplayTemplate($file) {
     if (file_exists(TEMPLATEPATH . '/'.$file)) {
@@ -70,7 +71,6 @@ function ita_link($atts, $content = null )
 }
 
 //add_shortcode('itunes', 'itunes_link');
-
 if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     wp_enqueue_script( 'jquery-ui-dialog' );
     wp_enqueue_style( 'ita-jquery-ui', plugins_url('/itunes-affiliate-link-maker/ita-jquery-ui.css'), array(), '0.11', 'screen' );
@@ -84,7 +84,22 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
 	register_uninstall_hook(__FILE__,array(&$ita,'italm_uninstall'));
 	register_activation_hook(__FILE__,array(&$ita,'italm_install'));
 
-
 	$plugin_dir = basename(dirname(__FILE__));
 	load_plugin_textdomain( 'italm', '', $plugin_dir );
+}
+else
+{
+	$urlCheck = '/('.itabase::setting('ita-maskurl').')(\/[A-Z,a-z,0-9,_,-,(,)-]*)*?$/';
+
+	if ( preg_match($urlCheck, $_SERVER['REQUEST_URI']) ) {
+		require_once(dirname(__FILE__).'/ita.class.public.php');
+
+		$itaPub = new itapub( );
+
+		remove_action('template_redirect', 'redirect_canonical');
+		add_filter('request', array(&$itaPub, 'ita_request'));
+		add_action('parse_query', array(&$itaPub, 'ita_parse_query'));
+		add_action('parse_request', array(&$itaPub, 'ita_parse_query'));
+		add_action('template_redirect', array(&$itaPub, 'ita_linkredir'));
+	}
 }
