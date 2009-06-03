@@ -34,6 +34,22 @@
             <span class="setting-description"><?php printf( __("Whatever you put in this box, will be merged onto the end of the %s above."), __("iTMS Link Generator URL") ); ?> <br/>eg. i use <code>&partnerId=1002&partnerUrl=http%3A%2F%2Fwww.s2d6.com%2Fx%2F%3Fx%3Dc%26z%3Ds%26v%3D1887240%26t%3D</code></span></td>
     </tr>
 
+	<tr valign="top">
+		<th scope="row"><?php _e("Search Limit"); ?></th>
+		<td>
+			<select name="ita-searchlimit" class="regular-text">
+                <?php
+                    $selectedLimit = ita::setting('ita-searchlimit');
+                    foreach(itabase::$searchLimits as $limit)
+                    {
+                        ?>
+                <option <?=$selectedLimit == $limit ? 'SELECTED ': '' ?>value="<?=$limit?>"><?=$limit?></option>
+                        <?php
+                    }
+                ?>
+			</select><span class="setting-description"> <?php _e("The number of results to return from iTMS Link Generator"); ?></span></td>
+	</tr>
+
     <tr valign="top">
         <th scope="row"><?php _e("Default Link Image"); ?></th>
         <td><input type="text" name="ita-linkimage" class="regular-text code" value="<?php echo ita::setting('ita-linkimage'); ?>"/><br/>

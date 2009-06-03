@@ -31,7 +31,7 @@ function italm_sendToEditor(stuff,imglink,thestr)
 
 function italm_linkIt( thestr, thelink, linkimage )
 {
-   var mysack = new sack("http://wordpress/wp-admin/admin-ajax.php" );
+   var mysack = new sack( "/wp-admin/admin-ajax.php" );
 
   mysack.execute = 1;
   mysack.method = 'POST';

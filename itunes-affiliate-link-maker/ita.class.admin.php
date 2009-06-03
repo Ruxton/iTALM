@@ -192,6 +192,7 @@ class ita extends itabase {
 		register_setting('ita-options','ita-linkimage');
 		register_setting('ita-options','ita-maskurl');
 		register_setting('ita-options','ita-maskenable');
+		register_setting('ita-options','ita-searchlimit');
 	}
 
 	/**

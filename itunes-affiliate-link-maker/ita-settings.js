@@ -10,7 +10,7 @@ jQuery(document).ready(function() {
 
 function updateTime( linkurl )
 {
-	var bigsack = new sack("http://wordpress/wp-admin/admin-ajax.php" );
+	var bigsack = new sack("/wp-admin/admin-ajax.php" );
 
 	bigsack.execute = 1;
 	bigsack.method = 'POST';

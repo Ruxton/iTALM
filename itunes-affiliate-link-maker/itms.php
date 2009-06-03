@@ -134,7 +134,10 @@ class itms {
 
 	private function buildQueryVars($term,$media,$country )
 	{
-		return "&country=".$country."&term=".urlencode($term)."&media=".$media;
+		$limit = "";
+		if(itabase::setting('ita-searchlimit') != '50' )
+			$limit = "&limit=".itabase::setting('ita-searchlimit');
+		return "&country=".$country."&term=".urlencode($term)."&media=".$media.$limit;
 	}
 }
 ?>
