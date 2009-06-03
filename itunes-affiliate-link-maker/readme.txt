@@ -4,9 +4,9 @@ Donate link: http://ignite.digitalignition.net/articlesexamples/itunes-affiliate
 Tags: editor,linking,affiliate,itunes,itunes store,itunes affiliate
 Requires at least: 2.7.1
 Tested up to: 2.7.1
-Stable tag: 0.2.2
+Stable tag: 0.4
 
-The plugin will add a button to the visual editor to run the iTunes Link Generator.
+The plugin will add a button to the visual editor to run the iTunes Link Generator and offers link masking to hide your affiliate junk.
 
 == Description ==
 
@@ -16,8 +16,11 @@ The plugin adds an itunes button to the visual editor which when clicked bring f
 dialog containing a search for the iTunes store link maker.
 
 After searching, clicking on any link will ask for a title for the link and insert it into the
-content editor. The link also enables the ability to directly link to albums, something the
-standard link generator does not normally do. 
+content editor. iTALM also enables the ability to directly link to albums, something the
+standard link generator does not normally do.
+
+iTALM also keeps track of recently clicked links and offers them up for clicking prior to
+searching, while also offering a link masking to hide your affiliate junk from captain smarty pants.
 
 == Installation ==
 
@@ -30,16 +33,13 @@ This section describes how to install the plugin and get it working.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Got a question? =
 
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+Visit the plugin homepage and send me a message.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
-2. This is the second screen shot.
+1. Initial screen upon clicking the button, showing previously clicked links sorted with most recent at the topc
+2. Showing the screen after searching
+3. Showing the screen after clicking a link inside the search or history results
+4. The end result how it looks in the editor (if you don't have any text selected)
