@@ -18,8 +18,18 @@
 	</target>
 	<target name="build">
 		<echo message="Creating a new build.." />
-		<copy todir="${dir.build}">
-			<fileset dir="${dir.dev}">
+		<copy todir="${dir.build}/itunes-affiliate-link-maker">
+			<fileset dir="${dir.src}" excludes="preg_match_test.php">
+			</fileset>
+		</copy>
+		<zip destfile="${dir.build}/italm.zip">
+			<zipfileset dir="${dir.src}" prefix="itunes-affiliate-link-maker" excludes="preg_match_test.php" />
+		</zip>
+	</target>
+	<target name="svn-update">
+		<echo message="Copying to SVN dir.." />
+		<copy todir="${dir.svn}">
+			<fileset dir="${dir.latest}">
 			</fileset>
 		</copy>
 	</target>
