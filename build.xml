@@ -9,6 +9,7 @@
 	</target>
 	<target name="devtest">
 		<echo message="Setting up dev environment.." />
+		<echo message="Copying to ${dir.dev}.." />
 		<copy todir="${dir.dev}">
 			<fileset dir="${dir.src}">
 			</fileset>
