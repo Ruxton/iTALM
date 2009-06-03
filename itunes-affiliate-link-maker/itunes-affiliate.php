@@ -25,7 +25,7 @@ Version:		0.4.1
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WP_DEBUG', true);
+//define('WP_DEBUG', false);
 
 include dirname(__FILE__)."/itms.php";
 require_once(dirname(__FILE__).'/ita.class.base.php');
