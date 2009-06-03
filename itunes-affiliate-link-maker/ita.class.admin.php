@@ -32,6 +32,45 @@ class ita {
 		add_action('admin_menu', array(&$this, 'ita_menus') );
 		add_action('admin_init', array(&$this, 'ita_register_settings'));
 		add_action('admin_init', array(&$this, 'ita_handle_search'));
+		add_action('wp_ajax_italm_ajax_it', array(&$this,'italm_ajax_it') );
+	}
+
+
+
+	function italm_ajax_it( )
+	{
+		$linkname = isset( $_POST['linkname'] ) ? $_POST['linkname'] : '';
+		$linkUrl = isset( $_POST['linkurl'] ) ? $_POST['linkurl'] : '';
+		$linkImage = isset( $_POST['linkimage'] ) ? $_POST['linkimage'] : '';
+
+		die( 'var title = prompt("Please enter a title for the link","");
+	if ( title == "" ) {
+		title = "'.$linkname.'";
+    }
+	var text = \'<a href="'.$linkUrl.'" title="\'+title+\'">\';
+
+	if ( typeof top.tinyMCE != \'undefined\' && ( ed = top.tinyMCE.activeEditor ) && !ed.isHidden() ) {
+		var Selector = ed.selection
+		var sel = Selector.getSel();
+		if(sel != "") {
+			var text = text+sel+\'</a>\';
+		}
+		else
+		{
+			var text = text+\'<img src="'.$linkImage.'" alt="\'+title+\'" ></a>\';
+		}
+
+		ed.focus();
+		if (top.tinymce.isIE)
+			ed.selection.moveToBookmark(tinymce.EditorManager.activeEditor.windowManager.bookmark);
+
+		ed.execCommand(\'mceInsertContent\', false, text);
+	}
+	else {
+		alert(\'no\');
+	}
+	top.jQuery("#ita-dialog").dialog("close");
+');
 	}
 
 	function italm_install( )

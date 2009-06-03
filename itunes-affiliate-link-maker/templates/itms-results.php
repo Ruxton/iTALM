@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>iTunes Link Maker Plugin for Wordpress Output - <?=$term?></title>
+<script type='text/javascript' src='<?= get_option('site_url') ?>/wp-includes/js/tw-sack.js?ver=1.6.1'></script>
 <script language="javascript" src="<?= get_option('site_url') ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.js">
 </script>
 <link rel="stylesheet" type="text/css" href="<?= get_option('site_url') ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.css">
