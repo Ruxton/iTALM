@@ -14,9 +14,20 @@ class ita extends itabase {
 		add_action('admin_init', array(&$this, 'ita_register_settings'));
 		add_action('admin_init', array(&$this, 'ita_handle_search'));
 		add_action('wp_ajax_italm_ajax_it', array(&$this,'italm_ajax_it') );
+		add_action('wp_ajax_italm_update_link', array(&$this,'italm_update_link') );
+		wp_enqueue_script('sack');
 	}
 
+	function italm_update_link( )
+	{
+		global $wpdb;
+		
+		$tableName = $wpdb->prefix . 'italm';
 
+		$linkUrl = $_POST['linkurl'];
+
+		$wpdb->update($tableName, array( 'updateTime' => time() ), array( 'linkUrl' => $linkUrl ), array('%d'), array('%s') );
+	}
 
 	function italm_ajax_it( )
 	{

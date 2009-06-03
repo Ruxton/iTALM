@@ -5,7 +5,7 @@ Plugin URI:		http://ignite.digitalignition.net/articlesexamples/itunes-affiliate
 Description:	Easily create links to the iTunes store with or without affiliate id's
 Author:			Greg Tangey
 Author URI:		http://ignite.digitalignition.net/
-Version:		0.3
+Version:		0.4
 */
 
 /*  Copyright 2009  Greg Tangey  (email : greg@digitalignition.net)
@@ -89,17 +89,17 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
 }
 else
 {
-	$urlCheck = '/('.itabase::setting('ita-maskurl').')(\/[A-Z,a-z,0-9,_,-,(,)-]*)*?$/';
+	if( itabase::setting('ita-maskenable') == '1')
+	{
+		$urlCheck = '/('.itabase::setting('ita-maskurl').')(\/[A-Z,a-z,0-9,_,-,(,)-]*)*?$/';
 
-	if ( preg_match($urlCheck, $_SERVER['REQUEST_URI']) ) {
-		require_once(dirname(__FILE__).'/ita.class.public.php');
+		if ( preg_match($urlCheck, $_SERVER['REQUEST_URI']) ) {
+			require_once(dirname(__FILE__).'/ita.class.public.php');
 
-		$itaPub = new itapub( );
-
-		remove_action('template_redirect', 'redirect_canonical');
-		add_filter('request', array(&$itaPub, 'ita_request'));
-		add_action('parse_query', array(&$itaPub, 'ita_parse_query'));
-		add_action('parse_request', array(&$itaPub, 'ita_parse_query'));
-		add_action('template_redirect', array(&$itaPub, 'ita_linkredir'));
+			$itaPub = new itapub( );
+			remove_action('template_redirect', 'redirect_canonical');
+			add_filter('request', array(&$itaPub, 'ita_request'));
+			add_action('template_redirect', array(&$itaPub, 'ita_linkredir'));
+		}
 	}
 }

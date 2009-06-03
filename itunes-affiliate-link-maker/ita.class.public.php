@@ -5,6 +5,18 @@ class itapub extends itabase
 
 	private $pagename = '';
 
+	public function ita_return_query(&$query)
+	{
+		$query->is_404 = true;
+		$query->did_permalink = true;
+	}
+
+	public function ita_return_request($query_vars)
+	{
+		$query_vars['error'] = true;
+		return $query_vars;
+	}
+
 	public function ita_parse_query(&$query) {
 		$query->is_404 = false;
 		$query->did_permalink = false;
@@ -19,9 +31,10 @@ class itapub extends itabase
 
 	public function ita_linkredir( )
 	{
-		if($this->pagename == '' || $this->pagename == 'italm' )
+		if($this->pagename == '' || $this->pagename == itabase::setting('ita-maskurl') )
 		{
-			header('location: '.get_option('siteurl'));
+			header(404);
+			add_action('template_redirect', 'redirect_canonical');
 		}
 		else
 		{
@@ -36,10 +49,13 @@ class itapub extends itabase
 			
 			if(sizeof($row) < 1)
 			{
-				header('location: '.get_option('siteurl'));
+				header(404);
+				add_action('template_redirect', 'redirect_canonical');
 			}
 			else
 			{
+				add_action('parse_query', array(&$this, 'ita_parse_query'));
+				add_action('parse_request', array(&$this, 'ita_parse_query'));
 				header('location: '.$row->linkUrl);
 			}
 		}

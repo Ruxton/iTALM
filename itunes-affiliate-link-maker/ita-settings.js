@@ -8,6 +8,21 @@ jQuery(document).ready(function() {
 	} );
 });
 
+function updateTime( linkurl )
+{
+	var bigsack = new sack("http://wordpress/wp-admin/admin-ajax.php" );
+
+	bigsack.execute = 1;
+	bigsack.method = 'POST';
+	bigsack.setVar( "action", "italm_update_link");
+	bigsack.setVar( "linkurl", linkurl );
+	bigsack.encVar( "cookie", document.cookie, false );
+	bigsack.onError = function() { alert('Ajax error in history log' )};
+	bigsack.runAJAX();
+
+	return true;
+}
+
 function itaToEditor( linkname, linkurl, linkimage ) {
 	var title = prompt("Please enter a title for the link","");
 	if ( title == "" || title == null ) {
