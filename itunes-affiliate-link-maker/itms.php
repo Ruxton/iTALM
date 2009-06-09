@@ -17,7 +17,6 @@ class itms {
         "movie" => "Movies",
         "shortFilm" => "Short Films",
         "tvShow" => "TV Shows",
-        "software" => "Applications",
         "musicVideo" => "Music Videos",
         "audiobook" => "Audiobooks",
         "podcast" => "Podcasts",

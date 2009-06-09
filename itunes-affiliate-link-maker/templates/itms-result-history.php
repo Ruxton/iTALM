@@ -22,7 +22,7 @@
     foreach($queryRes as $result) {
     ?>
             <tr>
-                    <td width="70%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->linkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?= $result->linkName; ?>');return false;"><?=$result->linkName?></a></td>
+                    <td width="70%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->linkUrl?>" onClick="italm_linkIt('<?= $result->linkName; ?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->linkName?></a></td>
                     <td width="30%"<?=( $i == 0 ? ' class="odd"' : '' )?>><?= date("F j, Y, g:i a O", $result->updateTime ) ?></td>
             </tr>
     <?php

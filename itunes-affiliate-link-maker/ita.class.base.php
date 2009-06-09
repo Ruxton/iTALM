@@ -15,6 +15,7 @@ class itabase
 	public static $defaultSettings = array(
 		"ita-country" => "AU",
 		"ita-partner" => "",
+		"ita-partnerurl" => "",
 		"ita-defaultalbfix" => "1",
 		"ita-itmslm" => "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?WOURLEncoding=ISO8859_1&output=json",
 		"ita-defaultmedia" => "all",

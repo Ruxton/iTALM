@@ -33,11 +33,22 @@ else
     foreach($resArr as $result) {
 
         $realAlbumURL = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->itemParentLinkUrl);
+		$trackName = $result->artistName.'-'.$result->itemName;
+		if( $result->mediaType == "music-video" )
+			$trackName = $trackName.' (Music Video)';
+		if( $result->mediaType == "tv-episode" )
+			$trackName = $trackName.' (TV)';
+		if( $result->mediaType == "podcast" )
+			$trackName = $trackName.' (Podcast)';
+		if( $result->mediaType == "feature-movie" )
+			$trackName = $trackName.' (Movie)';
+		if( $result->mediaType == "audiobook" )
+			$trackName = $trackName.' (Audiobook)';
     ?>
             <tr>
-                    <td width="34%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->itemLinkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?= $result->artistName.'-'.$result->itemName ?>');return false;"><?=$result->itemName?></a></td>
-                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?= $albumOnly ? $realAlbumURL : $result->itemParentLinkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?= $result->artistName.'-'.$result->itemParentName.' (Album)' ?>');return false;"><?=$result->itemParentName?></a></td>
-                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->artistLinkUrl?>" onClick="italm_sendToEditor(this.href,'<?=$ita_linkImage?>','<?=$result->artistName?>');return false;"><?=$result->artistName?></a></td>
+                    <td width="34%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->itemLinkUrl?>" onClick="italm_sendToEditor('<?=$trackName?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemName?></a></td>
+                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?= $albumOnly ? $realAlbumURL : $result->itemParentLinkUrl?>" onClick="italm_sendToEditor('<?= $result->artistName.'-'.$result->itemParentName.' (Album)' ?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemParentName?></a></td>
+                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->artistLinkUrl?>" onClick="italm_sendToEditor('<?=$result->artistName?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->artistName?></a></td>
             </tr>
     <?php
             $i == 0 ? $i = 1 : $i = 0;

@@ -5,7 +5,7 @@ Plugin URI:		http://ignite.digitalignition.net/articlesexamples/itunes-affiliate
 Description:	Easily create links to the iTunes store with or without affiliate id's
 Author:			Greg Tangey
 Author URI:		http://ignite.digitalignition.net/
-Version:		0.4.1
+Version:		0.5b
 */
 
 /*  Copyright 2009  Greg Tangey  (email : greg@digitalignition.net)
@@ -50,10 +50,17 @@ function ita_js_escape($text) {
 
 function ita_link($atts, $content = null )
 {
+	global $wpdb;
+	$tableName = $wpdb->prefix.'italm';
 	$ita_linkImage = itabase::setting('ita-linkimage');
-	$ita_prelink = itabase::setting('ita-partner');
+	$ita_prelink = itabase::setting('ita-partnerurl');
+	$ita_partnerid = itabase::setting('ita-partner');
 	$ita_mask = itabase::setting('ita-maskenable');
-	
+
+	if(trim($ita_partnerid) != "")
+	{
+		$ita_partnerid = "&partnerId=".$ita_partnerid;
+	}
 	$return = "";
 
 	extract (
@@ -65,15 +72,40 @@ function ita_link($atts, $content = null )
 			), $atts
 		)
 	);
-	
+
+	$link = preg_replace('/&#038;(?![a-zA-Z1-4]{1,8};)/', '\&$1', $link);
+	$link = str_replace('&amp;', '&', $link);
+
 	if($title != "")
 	{
 		$title = 'title="'.attribute_escape($title).'"';
 		$alt = 'alt="'.attribute_escape($title).'"';
 	}
+	
 	if($ita_mask != '1')
 	{
-		$link = $ita_prelink.urlencode($link);
+		if( (trim($ita_prelink) != "") && (trim($ita_partnerid) != "") )
+		{
+			$link = $ita_prelink.urlencode($link.trim($ita_partnerid));
+		}
+	}
+	else
+	{
+		$ita_scQuery = 'SELECT * FROM '.$tableName.' WHERE linkUrl = \''.$link.'\';';
+		$linkResult = $wpdb->get_row($ita_scQuery,ARRAY_A);
+
+		$maskedUrl = get_option('siteurl').'/'.itabase::setting('ita-maskurl').'/%s';
+		if(sizeof($linkResult) > 0 )
+		{
+			$link = sprintf($maskedUrl, str_replace(' ', '_', $linkResult['linkName'] ) );
+		}
+		else
+		{
+			if( (trim($ita_prelink) != "") && (trim($ita_partnerid) != "") )
+			{
+				$link = $ita_prelink.urlencode($link.trim($ita_partnerid));
+			}
+		}
 	}
 		
 	if($text == "")

@@ -13,6 +13,7 @@ class ita extends itabase {
 		add_action('admin_menu', array(&$this, 'ita_menus') );
 		add_action('admin_init', array(&$this, 'ita_register_settings'));
 		add_action('admin_init', array(&$this, 'ita_handle_search'));
+		add_action('admin_init', array(&$this, 'italm_upgrade'));
 		add_action('wp_ajax_italm_ajax_it', array(&$this,'italm_ajax_it') );
 		add_action('wp_ajax_italm_update_link', array(&$this,'italm_update_link') );
 		add_action( 'edit_form_advanced', array(&$this, 'italm_quicktags') );
@@ -43,6 +44,28 @@ class ita extends itabase {
 // ]]>
 </script>
 		<?php
+	}
+
+	function italm_upgrade( )
+	{
+		global $wpdb;
+		$tableName = $wpdb->prefix.'italm';
+		
+		$partnerStuff = itabase::setting('ita-partner');
+
+		$temp = split('&',$partnerStuff);
+		array_shift($temp);
+		$options = array( );
+		foreach($temp as $option)
+		{
+			$res = split('=',$option);
+			$name = $res[0];
+			$options[$name] = ($name == "partnerUrl") ? urldecode($res[1]) : $res[1];
+		}
+
+
+		$query = 'SELECT * FROM '.$tableName.' WHERE linkUrl LIKE(\''.$options["partnerUrl"].'%\');';
+		var_dump($query);
 	}
 
 	function italm_update_link( )
@@ -89,7 +112,7 @@ class ita extends itabase {
 			$maskedUrl = $linkUrl;
 		}
 
-		die( 'top.itaToEditor(\''.$linkname.'\',\''.$maskedUrl.'\',\''.$linkImage.'\');top.itaOk( );');
+		die( 'top.itaToEditor(\''.$linkname.'\',\''.$linkUrl.'\',\''.$linkImage.'\');top.itaOk( );' );
 	}
 
 	function italm_install( )
@@ -211,6 +234,7 @@ class ita extends itabase {
 	function ita_register_settings( )
 	{
 		register_setting('ita-options','ita-partner');
+		register_setting('ita-options','ita-partnerurl');
 		register_setting('ita-options','ita-defaultcountry');
 		register_setting('ita-options','ita-defaultalbfix');
 		register_setting('ita-options','ita-itmslm');
