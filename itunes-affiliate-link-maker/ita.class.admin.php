@@ -15,7 +15,34 @@ class ita extends itabase {
 		add_action('admin_init', array(&$this, 'ita_handle_search'));
 		add_action('wp_ajax_italm_ajax_it', array(&$this,'italm_ajax_it') );
 		add_action('wp_ajax_italm_update_link', array(&$this,'italm_update_link') );
+		add_action( 'edit_form_advanced', array(&$this, 'italm_quicktags') );
+		add_action( 'edit_page_form', array(&$this, 'italm_quicktags') );
 		wp_enqueue_script('sack');
+	}
+
+	function italm_quicktags( )
+	{
+		$output = '<input type="button" id="ita_button" class="ed_button" onclick="ita_button_click()" title="ita" value="iTunes" />';
+		?>
+<script type="text/javascript">
+// <![CDATA[
+	jQuery(document).ready(function(){
+		// Add the buttons to the HTML view
+		jQuery("#ed_toolbar").append('<?php echo ita_js_escape( $output ); ?>');
+	});
+	function ita_button_click( )
+	{
+		jQuery("#ita-dialog").dialog({ autoOpen: false, width: 750, minWidth: 750, height: 400, minHeight: 350, maxHeight: 750, title: 'iTunes Affiliate Link Maker', resizable: false });
+
+		// Show the dialog now that it's done being manipulated
+		jQuery("#ita-dialog").dialog("open");
+
+		// Focus the input field
+		jQuery("#ita-dialog-input").focus();
+	}
+// ]]>
+</script>
+		<?php
 	}
 
 	function italm_update_link( )
@@ -62,7 +89,7 @@ class ita extends itabase {
 			$maskedUrl = $linkUrl;
 		}
 
-		die( 'top.itaToEditor(\''.$linkname.'\',\''.$maskedUrl.'\',\''.$linkImage.'\');top.jQuery("#ita-dialog").dialog("close");');
+		die( 'top.itaToEditor(\''.$linkname.'\',\''.$maskedUrl.'\',\''.$linkImage.'\');top.itaOk( );');
 	}
 
 	function italm_install( )

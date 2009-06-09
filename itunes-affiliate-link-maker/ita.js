@@ -1,6 +1,5 @@
 (function() {
 	// Load plugin specific language pack
-	//tinymce.PluginManager.requireLangPack('vipersvideoquicktags');
 
 	tinymce.create('tinymce.plugins.ita', {
 		/**

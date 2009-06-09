@@ -38,10 +38,22 @@ function ita_getDisplayTemplate($file) {
     }
 }
 
+// WordPress' js_escape() won't allow <, >, or " -- instead it converts it to an HTML entity. This is a "fixed" function that's used when needed.
+// thanks to Viper007Bond
+function ita_js_escape($text) {
+	$safe_text = addslashes($text);
+	$safe_text = preg_replace('/&#(x)?0*(?(1)27|39);?/i', "'", stripslashes($safe_text));
+	$safe_text = preg_replace("/\r?\n/", "\\n", addslashes($safe_text));
+	$safe_text = str_replace('\\\n', '\n', $safe_text);
+	return apply_filters('js_escape', $safe_text, $text);
+}
 
 function ita_link($atts, $content = null )
 {
-	global $ita_linkImage,$ita_prelink;
+	$ita_linkImage = itabase::setting('ita-linkimage');
+	$ita_prelink = itabase::setting('ita-partner');
+	$ita_mask = itabase::setting('ita-maskenable');
+	
 	$return = "";
 
 	extract (
@@ -49,28 +61,35 @@ function ita_link($atts, $content = null )
 			array (
 				'link' => '',
 				'title' => '',
+				'text' => '',
 			), $atts
 		)
 	);
+	
 	if($title != "")
 	{
 		$title = 'title="'.attribute_escape($title).'"';
 		$alt = 'alt="'.attribute_escape($title).'"';
 	}
-		
-	if($content == null)
+	if($ita_mask != '1')
 	{
-		$return = '<a href="'.$ita_prelink.$link.'" '.$title.'><img src="'.$ita_linkImage.'" width="61" height="16" '.$title.' /></a>';
+		$link = $ita_prelink.urlencode($link);
+	}
+		
+	if($text == "")
+	{
+		$return = '<a href="'.$link.'" '.$title.'><img src="'.$ita_linkImage.'" width="61" height="16" '.$title.' /></a>';
 	}
 	else
 	{
-		$return = '<a href="'.$ita_prelink.$link.'" '.$title.'>'.$content.'</a>';
+		$return = '<a href="'.$link.'" '.$title.'>'.$text.'</a>';
 	}
 
 	return $return;
 }
 
-//add_shortcode('itunes', 'itunes_link');
+add_shortcode('itunes', 'ita_link');
+
 if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     wp_enqueue_script( 'jquery-ui-dialog' );
     wp_enqueue_style( 'ita-jquery-ui', plugins_url('/itunes-affiliate-link-maker/ita-jquery-ui.css'), array(), '0.11', 'screen' );

@@ -54,9 +54,15 @@ class itapub extends itabase
 			}
 			else
 			{
+				$link = $row->linkUrl;
+				$partnerStuff = itabase::setting('ita-partner');
+				if(trim($partnerStuff) != "" )
+				{
+					$link = $partnerStuff.urlencode($link);
+				}
 				add_action('parse_query', array(&$this, 'ita_parse_query'));
 				add_action('parse_request', array(&$this, 'ita_parse_query'));
-				header('location: '.$row->linkUrl);
+				header('location: '.$link);
 			}
 		}
 	}

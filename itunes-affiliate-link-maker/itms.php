@@ -116,16 +116,16 @@ class itms {
 	private $source;
 	private $partnerstuff;
 
-        public function itms( )
-        {
-             $this->partnerstuff = ita::setting('ita-partner');
-             $this->source = ita::setting('ita-itmslm');
-        }
+	public function itms( )
+	{
+		 $this->partnerstuff = itabase::setting('ita-partner');
+		 $this->source = itabase::setting('ita-itmslm');
+	}
 
 	public function getResults( $term = "", $media = "all", $country = 'AU' )
 	{
 		$queryvars = $this->buildQueryVars( $term, $media, $country );
-		$url = $this->source.$this->partnerstuff.$queryvars;
+		$url = $this->source.$queryvars;
 		$results = file_get_contents($url);
 
 		$arr = json_decode($results);

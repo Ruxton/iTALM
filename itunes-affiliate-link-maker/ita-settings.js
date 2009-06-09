@@ -8,6 +8,8 @@ jQuery(document).ready(function() {
 	} );
 });
 
+var tagopen = false;
+
 function updateTime( linkurl )
 {
 	var bigsack = new sack("/wp-admin/admin-ajax.php" );
@@ -28,19 +30,18 @@ function itaToEditor( linkname, linkurl, linkimage ) {
 	if ( title == "" || title == null ) {
 		title = linkname;
     }
-	var text = '<a href="'+linkurl+'" title="'+title+'">';
+	var text = '[itunes link="'+linkurl+'" title="'+title+'"';
 
 	if ( typeof tinyMCE != 'undefined' && ( ed = tinyMCE.activeEditor ) && !ed.isHidden() ) {
 		var Selector = ed.selection
 		var sel = Selector.getSel();
 		if(sel != "") {
-			text = text+sel+'</a>';
+			text = text+' text="'+sel+'"]';
 		}
 		else
 		{
-			text = text+'<img src="'+linkimage+'" alt="'+title+'" ></a>';
+			text = text+']';
 		}
-
 		ed.focus();
 		if (tinymce.isIE)
 			ed.selection.moveToBookmark(tinymce.EditorManager.activeEditor.windowManager.bookmark);
@@ -48,6 +49,30 @@ function itaToEditor( linkname, linkurl, linkimage ) {
 		ed.execCommand('mceInsertContent', false, text);
 	}
 	else {
-		alert('no');
+		//IE support
+		var selectedText = '';
+		if (document.selection) {
+			sel = document.selection.createRange();
+			selectedText = sel.text;
+		}
+		//MOZILLA/NETSCAPE support
+		else if (edCanvas.selectionStart || edCanvas.selectionStart == '0') {
+			var startPos = edCanvas.selectionStart;
+			var endPos = edCanvas.selectionEnd;
+			selectedText = edCanvas.value.substring(startPos,endPos)
+		}
+		if(selectedText != '')
+		{
+			text = text+' text="'+selectedText+'"]';
+		}
+		else
+		{
+			text = text+']';;
+		}
+		edInsertContent(edCanvas, text);
 	}
+}
+function itaOk( )
+{
+	jQuery("#ita-dialog").dialog("close");
 }
