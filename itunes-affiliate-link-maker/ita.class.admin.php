@@ -13,7 +13,7 @@ class ita extends itabase {
 		add_action('admin_menu', array(&$this, 'ita_menus') );
 		add_action('admin_init', array(&$this, 'ita_register_settings'));
 		add_action('admin_init', array(&$this, 'ita_handle_search'));
-		add_action('admin_init', array(&$this, 'italm_upgrade'));
+		add_action('admin_init', array(&$this, 'italm_upgrade_check'));
 		add_action('wp_ajax_italm_ajax_it', array(&$this,'italm_ajax_it') );
 		add_action('wp_ajax_italm_update_link', array(&$this,'italm_update_link') );
 		add_action( 'edit_form_advanced', array(&$this, 'italm_quicktags') );
@@ -46,6 +46,30 @@ class ita extends itabase {
 		<?php
 	}
 
+	function italm_upgrade_check( )
+	{
+		$version = ita::setting('ita-version');
+		if($version == '0')
+			add_action( 'admin_notices', array(&$this, 'italm_upgrade_notice') );
+	}
+
+	function italm_upgrade_notice( )
+	{
+		$notice = '<div class="error"><p>' . sprintf( __( "<strong>WARNING:</strong> Your version of iTALM requires upgrading please visit the <a href=\"%s\">upgrade page</a>."), admin_url('options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade')  ) . "</p></div>\n";
+		if( isset($_GET['italm']) && isset($_GET['page']) )
+		{
+			if($_GET['italm'] != "upgrade")
+			{
+				echo $notice;
+			}
+		}
+		else
+		{
+			echo $notice;
+		}
+	}
+
+
 	function italm_upgrade( )
 	{
 		global $wpdb;
@@ -62,10 +86,55 @@ class ita extends itabase {
 			$name = $res[0];
 			$options[$name] = ($name == "partnerUrl") ? urldecode($res[1]) : $res[1];
 		}
-
-
-		$query = 'SELECT * FROM '.$tableName.' WHERE linkUrl LIKE(\''.$options["partnerUrl"].'%\');';
-		var_dump($query);
+		if(trim($options["partnerUrl"]) != "")
+		{
+			$query = 'SELECT * FROM '.$tableName.' WHERE linkUrl LIKE(\''.$options["partnerUrl"].'%\');';
+			$res = $wpdb->get_results( $query, ARRAY_A );
+			$updates = array( );
+			if(sizeof($res) > 0)
+			{
+				foreach($res as $link)
+				{
+					$linkid = $link['linkid'];
+					$newlink = urldecode(trim( str_replace( $options['partnerUrl'],'', $link['linkUrl'] ) ));
+					$newlink = str_replace('&partnerId='.$options['partnerId'],'',$newlink);
+					$updates[$linkid]['url'] = $newlink;
+					$updates[$linkid]['name'] = $link['linkName'];
+				}
+			}
+		}
+		if(isset($_GET['proceed']))
+		{
+			$token = get_option('italm-upgrade-token','');
+			if(trim($token) != "" && $_GET['proceed'] == $token)
+			{
+				foreach($updates as $id => $link)
+				{
+					print "[".$id."] Updating ".$link['name']." to ".$link['url']."<br/>";
+					$url = $link["url"];
+					$newLinkName = ita_sanitize_title($link["name"]);
+					if(!$wpdb->update( $tableName, array( 'linkUrl' => $url, 'linkName' => $newLinkName ), array( 'linkid' => $id ), array( '%s' ), array( '%d' ) ))
+					{
+						
+					}
+				}
+				update_option('ita-partner',$options['partnerId']);
+				update_option('ita-partnerurl',$options['partnerUrl']);
+				update_option('ita-version','0.1');
+				$wpdb->query( $wpdb->prepare( "DELETE FROM wp_options WHERE option_name = %s;",'italm-upgrade-token' ) );
+			}
+			else
+			{
+				$err = '<div class="wrap"><h2>Error Upgrading iTALM</h2><div class="error" ><p><strong>Error Upgrading</strong> - Please return to <a href="'.admin_url("options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade").'">upgrade page</a></p></div></div>';
+				print($err);
+			}
+		}
+		else
+		{
+			$tokenval = md5(time().get_option('siteurl'));
+			update_option('italm-upgrade-token', $tokenval);
+			include ita_getDisplayTemplate('ita-upgrade.php');
+		}
 	}
 
 	function italm_update_link( )
@@ -85,7 +154,7 @@ class ita extends itabase {
 
 		$tableName = $wpdb->prefix . 'italm';
 
-		$linkname = isset( $_POST['linkname'] ) ? $_POST['linkname'] : '';
+		$linkname =  ita_sanitize_title( isset( $_POST['linkname'] ) ? $_POST['linkname'] : '' );
 		$linkUrl = isset( $_POST['linkurl'] ) ? $_POST['linkurl'] : '';
 		$linkImage = isset( $_POST['linkimage'] ) ? $_POST['linkimage'] : '';
 
@@ -290,7 +359,17 @@ class ita extends itabase {
 	 */
 	function ita_settings_page( )
 	{
-		include ita_getDisplayTemplate('ita-admin-settings.html');
+		if(isset($_GET['italm']))
+		{
+			if($_GET['italm'] == 'upgrade')
+				$this->italm_upgrade( );
+			else
+				include ita_getDisplayTemplate('ita-admin-settings.html');
+		}
+		else
+		{
+			include ita_getDisplayTemplate('ita-admin-settings.html');
+		}
 	}
 }
 ?>

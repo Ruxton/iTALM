@@ -13,6 +13,7 @@ class itabase
 
 	//All the default settings that are used when none are stored in wp_options
 	public static $defaultSettings = array(
+		"ita-version" => "0",
 		"ita-country" => "AU",
 		"ita-partner" => "",
 		"ita-partnerurl" => "",

@@ -46,9 +46,9 @@ else
 			$trackName = $trackName.' (Audiobook)';
     ?>
             <tr>
-                    <td width="34%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->itemLinkUrl?>" onClick="italm_sendToEditor('<?=$trackName?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemName?></a></td>
-                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?= $albumOnly ? $realAlbumURL : $result->itemParentLinkUrl?>" onClick="italm_sendToEditor('<?= $result->artistName.'-'.$result->itemParentName.' (Album)' ?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemParentName?></a></td>
-                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->artistLinkUrl?>" onClick="italm_sendToEditor('<?=$result->artistName?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->artistName?></a></td>
+                    <td width="34%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->itemLinkUrl?>" onClick="italm_sendToEditor('<?=ita_js_escape($trackName)?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemName?></a></td>
+                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?= $albumOnly ? $realAlbumURL : $result->itemParentLinkUrl?>" onClick="italm_sendToEditor('<?= ita_js_escape($result->artistName.'-'.$result->itemParentName.' (Album)') ?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemParentName?></a></td>
+                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->artistLinkUrl?>" onClick="italm_sendToEditor('<?=ita_js_escape($result->artistName)?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->artistName?></a></td>
             </tr>
     <?php
             $i == 0 ? $i = 1 : $i = 0;

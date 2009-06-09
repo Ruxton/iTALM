@@ -97,7 +97,7 @@ function ita_link($atts, $content = null )
 		$maskedUrl = get_option('siteurl').'/'.itabase::setting('ita-maskurl').'/%s';
 		if(sizeof($linkResult) > 0 )
 		{
-			$link = sprintf($maskedUrl, str_replace(' ', '_', $linkResult['linkName'] ) );
+			$link = sprintf($maskedUrl, urlencode( str_replace(' ', '_', $linkResult['linkName'] ) ) );
 		}
 		else
 		{
@@ -142,15 +142,37 @@ else
 {
 	if( itabase::setting('ita-maskenable') == '1')
 	{
-		$urlCheck = '/('.itabase::setting('ita-maskurl').')(\/[A-Z,a-z,0-9,_,-,(,)-]*)*?$/';
-
+		$urlCheck = '/('.itabase::setting('ita-maskurl').')(\/[A-Z,a-z,0-9,_,-,(,),%-]*)*?$/';
 		if ( preg_match($urlCheck, $_SERVER['REQUEST_URI']) ) {
 			require_once(dirname(__FILE__).'/ita.class.public.php');
-
 			$itaPub = new itapub( );
 			remove_action('template_redirect', 'redirect_canonical');
 			add_filter('request', array(&$itaPub, 'ita_request'));
 			add_action('template_redirect', array(&$itaPub, 'ita_linkredir'));
 		}
 	}
+}
+
+function ita_sanitize_title($title) {
+	$title = strip_tags($title);
+	// Preserve escaped octets.
+	$title = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '---$1---', $title);
+	// Remove percent signs that are not part of an octet.
+	$title = str_replace('%', '', $title);
+	// Restore octets.
+	$title = preg_replace('|---([a-fA-F0-9][a-fA-F0-9])---|', '%$1', $title);
+
+	$title = remove_accents($title);
+	if (seems_utf8($title)) {
+		$title = utf8_uri_encode($title, 200);
+	}
+
+	//$title = strtolower($title);
+	$title = preg_replace('/&.+?;/', '', $title); // kill entities
+	$title = preg_replace('/[^%a-zA-Z0-9 ()_-]/', '', $title);
+	$title = preg_replace('/\s+/', '_', $title);
+	$title = preg_replace('|-+|', '-', $title);
+	$title = trim($title, '-');
+
+	return $title;
 }
