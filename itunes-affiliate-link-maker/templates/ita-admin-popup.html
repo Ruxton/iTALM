@@ -1,57 +1,80 @@
-		<div class="hidden">
+<script type="text/javascript" language="javascript">
+	function itaswitch()
+	{
+		jQuery('#itasearch,#itamanual').slideToggle('fast');
+		if(jQuery('#ita-switchclick').html() == 'Manual Url?')
+		{
+			jQuery('#ita-switchclick').html('iTMS Search?');
+		}
+		else
+		{
+			jQuery('#ita-switchclick').html('Manual Url?')
+		}
+	}
+</script>
+
+<div class="hidden">
 			<div id="ita-dialog">
 				<div class="ita-dialog-content">
                                     <div class="inside">
 					<div id="ita-dialog-message"></div>
 					<form action="" method="POST" target="itms-link-maker">
-                                            <input type="hidden" name="ita-omg" id="ita-omg" />
-                                            <?php $checked = ita::setting('ita-defaultalbfix') == '1' ? ' CHECKED' : '' ?>
-    <p><label for="ita-album-only"><?php _e("Correct Album URL:"); ?></label> <input type="checkbox" id="ita-album-only" name="ita-album-only" value="1" tabindex="24"<?=$checked?> /></p>
+						<input type="hidden" name="ita-omg" id="ita-omg" />
+						<?php $checked = ita::setting('ita-defaultalbfix') == '1' ? ' CHECKED' : '' ?>
+						<p>History: <?php echo($pagination->generate());?><span style="float: right;"><a id="ita-switchclick" onclick="itaswitch();" for="ita-showmanual">Manual Url?</a> | <label for="ita-album-only"><?php _e("Correct Album URL:"); ?></label> <input type="checkbox" id="ita-album-only" name="ita-album-only" value="1" tabindex="24"<?php echo $checked; ?>/></span></p>
 
-	<div id="italm-history"></div>
+						<table width="700" border="0" cellspacing="2" cellpadding="0" id="ita-table">
+							<tbody id="itamanual" style="display: none;">
+								<tr>
+									<td><strong>Manual URL Entry</strong></td>
+								</tr>
+								<tr>
+									<td>
+										<input type="text" name="ita-manualurl" id="ita-manualurl" size="80" /><input type="submit" name="ita-manualgo" id="ita-manualgo" class="button-secondary action" value="Go!"/>
+									</td>
+								</tr>
+							</tbody>
+							<tbody id="itasearch">
+							<tr>
+								<td width="180"><strong><?php _e("Country"); ?></strong></td>
+								<td width="180"><strong><?php _e("Search"); ?></strong></td>
+								<td width="180"><strong><?php _e("Media Type"); ?></strong></td>
+								<td width="90"></td>
+							</tr>
+							<tr>
+								<td><select name="ita-country" id="ita-country" tabindex="21" >
+									<?php
+										$selectedCountry = ita::setting('ita-defaultcountry');
+										foreach(itms::$countries as $code=>$country)
+										{
+											?>
+											<option <?php echo($selectedCountry == $code ? 'SELECTED ': ''); ?>value="<?php echo($code); ?>"><?php echo($country); ?></option>
+											<?php
+										}
+									?>
+								</select></td>
 
-    <table width="700" border="0" cellspacing="2" cellpadding="0" id="ita-table">
-        <tbody>
-        <tr>
-            <td width="180"><strong><?php _e("Country"); ?></strong></td>
-            <td width="180"><strong><?php _e("Search"); ?></strong></td>
-            <td width="180"><strong><?php _e("Media Type"); ?></strong></td>
-            <td width="90"></td>
-        </tr>
-        <tr>
-            <td><select name="ita-country" id="ita-country" tabindex="21" >
-                <?php
-                    $selectedCountry = ita::setting('ita-defaultcountry');
-                    foreach(itms::$countries as $code=>$country)
-                    {
-                        ?>
-                        <option <?=$selectedCountry == $code ? 'SELECTED ': '' ?>value="<?=$code?>"><?=$country?></option>
-                        <?php
-                    }
-                ?>
-            </select></td>
-
-            <td><input type="text" value="" name="ita-term" id="ita-term" tabindex="22"/></td>
-            <td><select name="ita-media" id="ita-media" tabindex="23">
-                <?php
-                    $selectedMedia = ita::setting('ita-defaultmedia');
-                    foreach(itms::$media as $code=>$media)
-                    {
-                        ?>
-                        <option <?=$selectedMedia == $code ? 'SELECTED ': '' ?>value="<?=$code?>"><?=$media?></option>
-                        <?php
-                    }
-                ?>
-            </select></td>
-            <td align="right"><input type="submit" value="<?php _e("Search"); ?>" class="button-secondary action" tabindex="25" /></TD>
-        </tr>
-            </tbody>
-    </table>
+								<td><input type="text" value="" name="ita-term" id="ita-term" tabindex="22"/></td>
+								<td><select name="ita-media" id="ita-media" tabindex="23">
+									<?php
+										$selectedMedia = ita::setting('ita-defaultmedia');
+										foreach(itms::$media as $code=>$media)
+										{
+											?>
+											<option <?php echo($selectedMedia == $code ? 'SELECTED ': ''); ?>value="<?php echo($code); ?>"><?php echo($media); ?></option>
+											<?php
+										}
+									?>
+								</select></td>
+								<td align="right"><input type="submit" value="<?php _e("Search"); ?>" class="button-secondary action" tabindex="25" /></TD>
+							</tr>
+							</tbody>
+						</table>
 
 
-                                        </form>
-					<iframe name="itms-link-maker" src="?ita-omg=1" id="itms-link-maker" width="700" height="260" scrolling="no" ></iframe>
-                                    </div>
+					</form>
+					<iframe name="itms-link-maker" src="?ita-omg=1" id="itms-link-maker" width="700" height="260" scrolling="no" >s</iframe>
+					</div>
 				</div>
 			</div>
 		</div>

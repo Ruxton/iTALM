@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>iTunes Link Maker Plugin for Wordpress Output - <?=$term?></title>
-<script type='text/javascript' src='<?= get_option('site_url') ?>/wp-includes/js/tw-sack.js?ver=1.6.1'></script>
-<script language="javascript" src="<?= get_option('site_url') ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.js">
+<title>iTunes Link Maker Plugin for Wordpress Output - <?php echo $term; ?></title>
+<script type='text/javascript' src='<?php echo get_option('site_url'); ?>/wp-includes/js/tw-sack.js?ver=1.6.1'></script>
+<script language="javascript" src="<?php echo get_option('site_url'); ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.js">
 </script>
-<link rel="stylesheet" type="text/css" href="<?= get_option('site_url') ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.css">
+<link rel="stylesheet" type="text/css" href="<?php echo get_option('site_url'); ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.css">
 </head>
 <body>
 <table class="ita-results" id="ita-results-head" width="100%">
@@ -34,21 +34,42 @@ else
 
         $realAlbumURL = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->itemParentLinkUrl);
 		$trackName = $result->artistName.'-'.$result->itemName;
-		if( $result->mediaType == "music-video" )
-			$trackName = $trackName.' (Music Video)';
-		if( $result->mediaType == "tv-episode" )
-			$trackName = $trackName.' (TV)';
-		if( $result->mediaType == "podcast" )
-			$trackName = $trackName.' (Podcast)';
-		if( $result->mediaType == "feature-movie" )
-			$trackName = $trackName.' (Movie)';
-		if( $result->mediaType == "audiobook" )
-			$trackName = $trackName.' (Audiobook)';
+		$albumName = $result->artistName.'-'.$result->itemParentName;
+		$artistLink = $result->artistLinkUrl;
+		switch ($result->mediaType) {
+			case "music-video":
+				$trackName = $trackName.' (Music Video)';
+				$albumName = $albumName.' (Album)';
+				break;
+			case "tv-episode":
+				$trackName = $trackName.' (TV)';
+				$albumName = $albumName.' (TV Season)';
+				break;
+			case "podcast":
+				$trackName = $trackName.' (Podcast)';
+				$albumName = $albumName.' (Podcast Directory)';
+				break;
+			case "feature-movie":
+				$trackName = $trackName.' (Movie)';
+				break;
+			case "audiobook":
+				$trackName = $trackName.' (Audiobook)';
+				break;
+			default:
+				$albumName = $albumName.' (Album)';
+				break;
+		}
     ?>
             <tr>
-                    <td width="34%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->itemLinkUrl?>" onClick="italm_sendToEditor('<?=ita_js_escape($trackName)?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemName?></a></td>
-                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?= $albumOnly ? $realAlbumURL : $result->itemParentLinkUrl?>" onClick="italm_sendToEditor('<?= ita_js_escape($result->artistName.'-'.$result->itemParentName.' (Album)') ?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->itemParentName?></a></td>
-                    <td width="33%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$result->artistLinkUrl?>" onClick="italm_sendToEditor('<?=ita_js_escape($result->artistName)?>',this.href,'<?=$ita_linkImage?>');return false;"><?=$result->artistName?></a></td>
+                    <td width="34%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
+						<a href="<?php echo($result->itemLinkUrl); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($trackName); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->itemName); ?></a>
+					</td>
+                    <td width="33%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
+						<a href="<?php echo($albumOnly ? $realAlbumURL : $result->itemParentLinkUrl); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($result->artistName.'-'.$result->itemParentName.' (Album)'); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->itemParentName); ?></a>
+					</td>
+                    <td width="33%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
+						<?php if(trim($artistLink) != "") : ?><a href="<?php echo($artistLink); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($result->artistName); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php endif; echo($result->artistName); if(trim($artistLink) != "") : ?></a><?php endif; ?>
+					</td>
             </tr>
     <?php
             $i == 0 ? $i = 1 : $i = 0;

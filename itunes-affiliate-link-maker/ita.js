@@ -16,7 +16,7 @@
 				title : 'iTunes',
 				image : url + '/itunes.png',
 				onclick : function() {
-					jQuery("#ita-dialog").dialog({ autoOpen: false, width: 750, minWidth: 750, height: 400, minHeight: 350, maxHeight: 750, title: 'iTunes Affiliate Link Maker', resizable: false });
+					jQuery("#ita-dialog").dialog({ autoOpen: false, width: 750, minWidth: 750, height: 420, minHeight: 350, maxHeight: 750, title: 'iTunes Affiliate Link Maker', resizable: false });
 			
 					// Show the dialog now that it's done being manipulated
 					jQuery("#ita-dialog").dialog("open");

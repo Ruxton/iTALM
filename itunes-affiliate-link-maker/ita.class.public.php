@@ -51,8 +51,8 @@ class itapub extends itabase
 			
 			if(sizeof($row) < 1)
 			{
-				//header(404);
-				//add_action('template_redirect', 'redirect_canonical');
+				header(404);
+				add_action('template_redirect', 'redirect_canonical');
 			}
 			else
 			{

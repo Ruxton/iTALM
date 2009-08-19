@@ -125,7 +125,13 @@ class itms {
 	{
 		$queryvars = $this->buildQueryVars( $term, $media, $country );
 		$url = $this->source.$queryvars;
-		$results = file_get_contents($url);
+
+		$results = wp_remote_get( $url, array( 'timeout' => 30 ) );
+		if ( is_wp_error( $results ) )
+			return new WP_Error( 'italm', __( 'Can\'t retrieve a result for your search' ) );
+
+		$results = wp_remote_retrieve_body( $results );
+		//$results = file_get_contents($url);
 
 		$arr = json_decode($results);
 		return $arr;

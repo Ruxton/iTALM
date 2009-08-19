@@ -174,7 +174,7 @@ class ita extends itabase {
 
 		if(ita::setting('ita-maskenable') == '1')
 		{
-			$maskedUrl = sprintf($maskedUrl, str_replace(' ', '_', $linkResult['linkName'] ) );
+			$maskedUrl = sprintf($maskedUrl, str_replace(array(' ','.'), array('_',''), $linkResult['linkName'] ) );
 		}
 		else
 		{
@@ -255,17 +255,29 @@ class ita extends itabase {
 	function ita_handle_search( )
 	{
 		global $wpdb;
-		$tableName = $wpdb->prefix.'italm';
 		if( isset( $_POST['ita-omg'] ) || isset( $_GET['ita-omg'] ) )
 		{
-			if(! isset( $_POST['ita-term'] ) )
+			$tableName = $wpdb->prefix.'italm';
+			
+			$page = 0;
+			$perPage = 20;
+			if(isset($_GET['ita-pg']))
+			    $page = intval($_GET['ita-pg'])-1;
+
+			$pageLimit = $page*$perPage;
+			
+			if(! isset( $_POST['ita-term'] ) || $_POST['ita-term'] == "" )
 			{
-				$queryRes = $wpdb->get_results('SELECT * FROM '.$tableName.' ORDER BY updateTime DESC LIMIT 20',OBJECT );
-				if(sizeof($queryRes) < 1)
-					die('Error, no term');
+			
 				else
 				{
-					include ita_getDisplayTemplate("itms-result-history.php");
+					$queryRes = $wpdb->get_results('SELECT * FROM '.$tableName.' ORDER BY updateTime DESC LIMIT '.$pageLimit.','.$perPage,OBJECT );
+					if(sizeof($queryRes) < 1)
+						die('Error, no history results');
+					else
+					{
+						include ita_getDisplayTemplate("itms-result-history.php");
+					}
 				}
 			}
 			else
@@ -337,6 +349,19 @@ class ita extends itabase {
 	 */
 	function ita_jquery_dialog_div( )
 	{
+			global $wpdb;
+			$tableName = $wpdb->prefix.'italm';
+			require_once(dirname(__FILE__).'/libs/pagination.php');
+			$countHistory = $wpdb->get_col('SELECT count(*) as rows FROM '.$tableName.';');
+			$countHistory = $countHistory[0];
+			
+			//Build up a pagination line
+			$pagination = new Pagination( );
+			$pagination->setURL('?ita-omg=1', '" target="itms-link-maker');
+			$pagination->setTotalResults($countHistory);
+			$pagination->setCurrentPage(-1);
+			$pagination->setMaxItems(20);
+			$pagination->linksFormat('', ',', '');
             include ita_getDisplayTemplate('ita-admin-popup.html');
 	}
 
