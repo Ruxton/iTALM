@@ -33,7 +33,7 @@ class ita extends itabase {
 	});
 	function ita_button_click( )
 	{
-		jQuery("#ita-dialog").dialog({ autoOpen: false, width: 750, minWidth: 750, height: 400, minHeight: 350, maxHeight: 750, title: 'iTunes Affiliate Link Maker', resizable: false });
+		jQuery("#ita-dialog").dialog({ autoOpen: false, width: 750, minWidth: 750, height: 400, minHeight: 350, maxHeight: 750, title: 'iTunes Affiliate Link Maker', resizable: true });
 
 		// Show the dialog now that it's done being manipulated
 		jQuery("#ita-dialog").dialog("open");
@@ -268,9 +268,6 @@ class ita extends itabase {
 			
 			if(! isset( $_POST['ita-term'] ) || $_POST['ita-term'] == "" )
 			{
-			
-				else
-				{
 					$queryRes = $wpdb->get_results('SELECT * FROM '.$tableName.' ORDER BY updateTime DESC LIMIT '.$pageLimit.','.$perPage,OBJECT );
 					if(sizeof($queryRes) < 1)
 						die('Error, no history results');
@@ -278,7 +275,7 @@ class ita extends itabase {
 					{
 						include ita_getDisplayTemplate("itms-result-history.php");
 					}
-				}
+
 			}
 			else
 			{

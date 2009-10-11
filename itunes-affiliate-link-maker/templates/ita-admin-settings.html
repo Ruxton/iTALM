@@ -49,7 +49,7 @@
                     foreach(itabase::$searchLimits as $limit)
                     {
                         ?>
-                <option <?=$selectedLimit == $limit ? 'SELECTED ': '' ?>value="<?=$limit?>"><?=$limit?></option>
+                <option <?php echo($selectedLimit == $limit ? 'SELECTED ': ''); ?>value="<?php echo $limit; ?>"><?php echo $limit; ?></option>
                         <?php
                     }
                 ?>
@@ -70,7 +70,7 @@
                     foreach(itms::$media as $code=>$media)
                     {
                         ?>
-                <option <?=$selectedMedia == $code ? 'SELECTED ': '' ?>value="<?=$code?>"><?=$media?></option>
+                <option <?php echo($selectedMedia == $code ? 'SELECTED ': ''); ?>value="<?php echo $code; ?>"><?php echo $media; ?></option>
                         <?php
                     }
                 ?>
@@ -87,7 +87,7 @@
                 foreach(itms::$countries as $code=>$country)
                 {
                     ?>
-                <option <?=$selectedCountry == $code ? 'SELECTED ': '' ?>value="<?=$code?>"><?=$country?></option>
+                <option <?php echo($selectedCountry == $code ? 'SELECTED ': ''); ?>value="<?php echo $code; ?>"><?php echo $country; ?></option>
                     <?php
                 }
             ?>
@@ -102,7 +102,7 @@
             if( ita::setting('ita-defaultalbfix') == 1)
                 $checked = ' CHECKED';
         ?>
-        <td><input type="checkbox" name="ita-defaultalbfix" value="1"<?=$checked?>/> <span class="setting-description"><?php _e("Normally the links returned on the album line of iTMS Link Generator are directly to the song, this ensures the link is directly to the album."); ?></span></td>
+        <td><input type="checkbox" name="ita-defaultalbfix" value="1"<?php echo $checked; ?>/> <span class="setting-description"><?php _e("Normally the links returned on the album line of iTMS Link Generator are directly to the song, this ensures the link is directly to the album."); ?></span></td>
     </tr>
 
     <tr valign="top">
@@ -112,7 +112,7 @@
             if( ita::setting('ita-cleanup') == 1)
                 $cleanupChecked = ' CHECKED';
         ?>
-        <td><input type="checkbox" name="ita-cleanup" value="1"<?=$cleanupChecked?>/> <span class="setting-description"><?php _e("If this checkbox is active iTALM will remove all settings when de-activated."); ?></span></td>
+        <td><input type="checkbox" name="ita-cleanup" value="1"<?php echo $cleanupChecked; ?>/> <span class="setting-description"><?php _e("If this checkbox is active iTALM will remove all settings when de-activated."); ?></span></td>
     </tr>
 
 </table>

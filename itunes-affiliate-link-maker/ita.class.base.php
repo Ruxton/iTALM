@@ -18,7 +18,7 @@ class itabase
 		"ita-partner" => "",
 		"ita-partnerurl" => "",
 		"ita-defaultalbfix" => "1",
-		"ita-itmslm" => "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?WOURLEncoding=ISO8859_1&output=json",
+		"ita-itmslm" => "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsSearch?WOURLEncoding=ISO8859_1",
 		"ita-defaultmedia" => "all",
 		"ita-cleanup" => "0",
 		"ita-linkimage" => "http://ax.itunes.apple.com/images/badgeitunes61x15dark.gif",

@@ -31,11 +31,16 @@ else
     $i = 0;
 	$ita_linkImage = ita::setting('ita-linkimage');
     foreach($resArr as $result) {
+//		var_dump($result);
+//		exit;
+        $realAlbumURL = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->collectionViewUrl);
+		$trackURL = $result->trackViewUrl;
+		$artistLink = $result->artistViewUrl;
+		
+		$trackName = $result->artistName.'-'.$result->trackName;
+		$albumName = $result->artistName.'-'.$result->collectionName;
 
-        $realAlbumURL = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->itemParentLinkUrl);
-		$trackName = $result->artistName.'-'.$result->itemName;
-		$albumName = $result->artistName.'-'.$result->itemParentName;
-		$artistLink = $result->artistLinkUrl;
+
 		switch ($result->mediaType) {
 			case "music-video":
 				$trackName = $trackName.' (Music Video)';
@@ -62,10 +67,10 @@ else
     ?>
             <tr>
                     <td width="34%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
-						<a href="<?php echo($result->itemLinkUrl); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($trackName); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->itemName); ?></a>
+						<a href="<?php echo($trackURL); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($trackName); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->trackName); ?></a>
 					</td>
                     <td width="33%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
-						<a href="<?php echo($albumOnly ? $realAlbumURL : $result->itemParentLinkUrl); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($result->artistName.'-'.$result->itemParentName.' (Album)'); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->itemParentName); ?></a>
+						<a href="<?php echo($albumOnly ? $realAlbumURL : $result->collectionViewUrl); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($result->artistName.'-'.$result->collectionName.' (Album)'); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->collectionName); ?></a>
 					</td>
                     <td width="33%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
 						<?php if(trim($artistLink) != "") : ?><a href="<?php echo($artistLink); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($result->artistName); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php endif; echo($result->artistName); if(trim($artistLink) != "") : ?></a><?php endif; ?>

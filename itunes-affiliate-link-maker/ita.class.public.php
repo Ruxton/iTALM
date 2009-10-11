@@ -43,12 +43,12 @@ class itapub extends itabase
 			
 			$tableName = $wpdb->prefix.'italm';
 
-			$linkName = str_replace(array(itabase::setting('ita-maskurl').'/','_'),array('',' '), $this->pagename );
+			$linkName = str_replace(array(itabase::setting('ita-maskurl').'/'),array(''), $this->pagename );
 			print $linkName;
-			$query = sprintf("SELECT * FROM %s WHERE linkName = '%s'", $tableName, str_replace('_',' ',$linkName) );
+			$query = sprintf("SELECT * FROM %s WHERE linkName = '%s'", $tableName, $linkName );
 			print $query;
 			$row = $wpdb->get_row($query);
-			
+			var_dump($row);
 			if(sizeof($row) < 1)
 			{
 				header(404);

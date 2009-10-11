@@ -19,9 +19,50 @@ class itms {
         "tvShow" => "TV Shows",
         "musicVideo" => "Music Videos",
         "audiobook" => "Audiobooks",
+		"software" => "Applications",
         "podcast" => "Podcasts",
         "iTunesU" => "iTunes U",
     );
+
+	public static $entities = array (
+		"music" => array(
+			"musicArtist" => "Artist",
+			"musicTrack" => "Track",
+			"album" => "Album",
+			"musicVideo" => "Music Video",
+			"mix" => "iTunes Mix"
+		),
+		"movie" => array(
+			"movieArtist" => "Movie Artist",
+			"movie" => "Movie"
+		),
+		"podcast" => array(
+			"podcastAuthor" => "Podcast Author",
+			"podcast" => "Podcast"
+		),
+		"audiobook" => array(
+			"audiobookAuthor" => "Author",
+			"audiobook" => "Audiobook"
+		),
+		"shortFilm" => array(
+			"shortFilmArtist" => "Artist",
+			"shortFilm" => "Short Film"
+		),
+		"tvShow" => array(
+			"tvEpisode" => "TV Episode",
+			"tvSeason" => "TV Season"
+		),
+		"all" => array(
+			"movie" => "Movie Title",
+			"album" => "Album Title",
+			"allArtist" => "Artists",
+			"podcast" => "Podcasts",
+			"musicVideo" => "Music Video",
+			"mix" => "iTunes Mix",
+			"audiobook" => "Audiobook",
+			"tvSeason" => "TV Season",
+			"allTrack" => "Everything" )
+	);
 
     public static $countries = array (
         "AR" => "Argentina",
@@ -134,6 +175,8 @@ class itms {
 		//$results = file_get_contents($url);
 
 		$arr = json_decode($results);
+//		var_dump($arr);
+//		exit;
 		return $arr;
 	}
 
