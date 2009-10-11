@@ -73,7 +73,7 @@ function ita_link($atts, $content = null )
 		)
 	);
 
-	$link = preg_replace('/&#038;(?![a-zA-Z1-4]{1,8};)/', '\&$1', $link);
+	$link = preg_replace('/&#038;(?![a-zA-Z1-4]{1,8};)/', '&$1', $link);
 	$link = str_replace('&amp;', '&', $link);
 
 	if($title != "")

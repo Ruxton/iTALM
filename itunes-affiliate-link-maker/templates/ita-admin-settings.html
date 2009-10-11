@@ -31,13 +31,13 @@
     <tr valign="top">
         <th scope="row"><?php _e("Partner ID"); ?></th>
         <td><input type="text" name="ita-partner" class="regular-text code" value="<?php echo ita::setting('ita-partner'); ?>"/><br/>
-			<span class="setting-desription"><?php printf( __("The partner id, will be meged on the end of the link as <code>&partnerId=%s</code>"),ita::setting('ita-partner') ); ?></span></td>
+			<span class="setting-desription"><?php printf( __("The partner id, will be meged on the end of the link as <code>&partnerId=%s</code> <em>(dgmpro AU is 1002, linkshare USA is 30)</em>"),ita::setting('ita-partner') ); ?></span></td>
     </tr>
 
 	<tr valign="top">
 		<th scope="row"><?php _e("Partner URL"); ?></th>
         <td><input type="text" name="ita-partnerurl" class="regular-text code" value="<?php echo ita::setting('ita-partnerurl'); ?>"/><br/>
-            <span class="setting-description"><?php _e("Whatever you put in this box, will be merged onto the front of the link generated from the link generator"); ?> <br/>eg. i use <code>http://www.s2d6.com/x/?x=c&z=s&v=1887240&t=</code></span></td>
+			<span class="setting-description"><?php _e("Whatever you put in this box, will be merged onto the front of the link generated from the link generator"); ?> <br/>eg. i use <code>http://www.s2d6.com/x/?x=c&z=s&v=1887240&t=</code><br/>others use <code>http://click.linksynergy.com/fs-bin/stat?id=nIYMMwtWj4s&offerid=146261&type=3&subid=0&tmpid=1826&RD_PARM1=</code><br/><em>These codes are specific to users! don't use the example ones</em></span></td>
 	</tr>
 
 	<tr valign="top">
