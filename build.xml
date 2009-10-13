@@ -27,7 +27,8 @@
 		</zip>
 	</target>
 	<target name="svn-update">
-		<echo message="Copying to SVN dir.." />
+		<echo message="Updating....." />
+		<echo message="Copying to ${dir.svn}.." />
 		<copy todir="${dir.svn}">
 			<fileset dir="${dir.latest}">
 			</fileset>
