@@ -24,8 +24,10 @@
 
     <tr valign=top">
         <th scope="row"><?php _e("iTMS Link Generator URL"); ?></th>
-        <td><input type="text" name="ita-itmslm" class="regular-text code" value="<?php echo ita::setting('ita-itmslm'); ?>" /><br/>
-            <span class="setting-description"><?php _e("This is the URL for the iTunes Link maker"); ?> (change this right now and expect problems)</span></td>
+        <td><input type="text" name="ita-itmslm" id="ita-itmslm" class="regular-text code" value="<?php echo ita::setting('ita-itmslm'); ?>" />
+			<a onclick="document.getElementById('ita-itmslm').value='<?php echo ita::$defaultSettings['ita-itmslm']; ?>';">Reset Link</a>
+			<br/>
+            <span class="setting-description"><?php _e("This is the URL for the iTunes Link maker"); ?></span></td>
     </tr>
 
     <tr valign="top">
@@ -112,7 +114,7 @@
             if( ita::setting('ita-cleanup') == 1)
                 $cleanupChecked = ' CHECKED';
         ?>
-        <td><input type="checkbox" name="ita-cleanup" value="1"<?php echo $cleanupChecked; ?>/> <span class="setting-description"><?php _e("If this checkbox is active iTALM will remove all settings when de-activated."); ?></span></td>
+        <td><input type="checkbox" name="ita-cleanup" value="1"<?php echo $cleanupChecked; ?>/> <span class="setting-description"><?php _e("If this checkbox is active iTALM will remove all settings when de-activated. <strong><em>(Not Recommended)</em></strong>"); ?></span></td>
     </tr>
 
 </table>
@@ -123,6 +125,7 @@
 </form>
 
 <div  style="text-align:center;">
+<p>I've put alot of time into this plugin, if it's helping you make money, share the love below.</p>
 <form action="https://www.paypal.com/cgi-bin/webscr" enctype="application/x-www-form-urlencoded" method="post">
 <input name="cmd" type="hidden" value="_s-xclick" />
 <input name="hosted_button_id" type="hidden" value="5796453" />

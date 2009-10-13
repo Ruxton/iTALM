@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>iTunes Link Maker Plugin for Wordpress Output - <?=$term?></title>
+<title>iTunes Link Maker Plugin for Wordpress Output - <?php echo $term; ?></title>
 <script type='text/javascript' src='<?php echo get_option('site_url'); ?>/wp-includes/js/tw-sack.js?ver=1.6.1'></script>
 <script type="text/javascript" language="javascript" src="<?php echo get_option('site_url'); ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.js">
 </script>

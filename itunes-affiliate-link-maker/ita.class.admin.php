@@ -128,6 +128,7 @@ class ita extends itabase {
 				$err = '<div class="wrap"><h2>Error Upgrading iTALM</h2><div class="error" ><p><strong>Error Upgrading</strong> - Please return to <a href="'.admin_url("options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade").'">upgrade page</a></p></div></div>';
 				print($err);
 			}
+			print "All done.";
 		}
 		else
 		{

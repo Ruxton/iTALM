@@ -11,20 +11,20 @@
 		foreach($updates as $id => $link) {
 		?>
 				<tr>
-						<td width="70%"<?=( $i == 0 ? ' class="odd"' : '' )?>><a href="<?=$link['url']?>"><?= $link['name'] ?></a></td>
-						<td width="30%"<?=( $i == 0 ? ' class="odd"' : '' )?>><?= date("F j, Y, g:i a O", time() ) ?></td>
+						<td width="70%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>><a href="<?php echo $link['url']; ?>"><?php echo $link['name']; ?></a></td>
+						<td width="30%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>><?php echo date("F j, Y, g:i a O", time() ); ?></td>
 				</tr>
 		<?php
 				$i == 0 ? $i = 1 : $i = 0;
 		}
 	?></table>
-	<p><a class="button" href="<?=admin_url('options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade&proceed='.$tokenval)?>">Procced with upgrade</a></p>
+	<p><a class="button" href="<?php echo admin_url('options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade&proceed='.$tokenval); ?>">Procced with upgrade</a></p>
 	<?php
 	}
 	else
 	{
 		?><p>Nothing to upgrade<p>
-		<p><a class="button" href="<?=admin_url('options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php')?>">Return to settings</a></p><?php
+		<p><a class="button" href="<?php echo admin_url('options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php'); ?>">Return to settings</a></p><?php
 	}
 ?>
 </div>
