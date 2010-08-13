@@ -3,8 +3,8 @@ Contributors: ruxton
 Donate link: http://ignite.digitalignition.net/articlesexamples/itunes-affiliate-link-plugin/
 Tags: editor,linking,affiliate,itunes,itunes store,itunes affiliate
 Requires at least: 2.8.1
-Tested up to: 2.8.4
-Stable tag: 0.4.1
+Tested up to: 2.8.6
+Stable tag: 0.5.2
 
 The plugin will add a button to the visual editor to run the iTunes Link Generator and offers link masking to hide your affiliate junk.
 
@@ -31,15 +31,35 @@ This section describes how to install the plugin and get it working.
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Goto settings to setup the plugin
 
+Upgrading from previous versions? backup prior to running the upgrade procedure.
+0.5 and up now uses the [itunes] shorttag to drop links in, you can type them or search as per normal via
+either editor.  Also if you're upgrading, please hit the reset link button next to the iTMS Link Generator URL
+in the settings area if you'd like to search for Apps.
+
+eg. [itunes url="<storeurl>" title="<alttag>"] outputs itunes link image with alt text
+and [itunes url="<storeurl>" title="<alttag>" content="<string>"] outputs the string in content instead of the image
+
 == Frequently Asked Questions ==
 
-= OK, so I'm an affiliat of itunes how do I get the details for the Partner Boxes =
+= Dude, seriously.. what goes in all these boxes? =
 
-Visit the plugin homepage and send me a message.
+Ok it's not an easy question, i know what goes in them for me and some others, but some of yours are going to be different
+otherwise you're going to be using someone elses affiliate details.  But heres the short version to your answer..
+
+PartnerID - this is your iTunes PartnerId it turns up in your affiliate link as &partnerId=<number> it seems Aussies
+using dgmpro use 1002 and North Americans using Linkshare use 30.
+
+Partner URL - this is everything that goes into your affiliate link thats not the iTunes store link and the partnerId, the settings page
+shows you some examples, please don't use these but use them as a guide to work out what parts of yours to ad.
+
+= Ok now what? =
+
+Questions anyone? feature ideas? i've got some thoughts on where i'd like to take it, but your input is appreciated.
 
 == Screenshots ==
 
-1. Initial screen upon clicking the button, showing previously clicked links sorted with most recent at the topc
-2. Showing the screen after searching
-3. Showing the screen after clicking a link inside the search or history results
-4. The end result how it looks in the editor (if you don't have any text selected)
+1. Initial screen upon clicking the button, showing previously clicked links sorted with most recent at the top
+2. After clicking the Manual URL link, the input box swaps to an entry for iTunes store URL's
+3. Showing the screen after searching
+4. Showing the screen after clicking a link inside the search or history results
+5. The end result how it looks in the editor (if you don't have any text selected)

@@ -295,11 +295,16 @@ class ita extends itabase {
 				else
 					$country = ita::setting('ita_country');
 
+                                if( isset($_POST['ita-entity']))
+                                    $entity = $_POST['ita-entity'];
+                                else
+                                    $entity = "";
+
 
 				$term = $_POST['ita-term'];
 				$itms = new itms( );
 
-				$results = $itms->getResults($term,$media,$country);
+				$results = $itms->getResults($term,$media,$country,$entity);
 				$resArr = $results->results;
 				include ita_getDisplayTemplate("itms-results.php");
 			}

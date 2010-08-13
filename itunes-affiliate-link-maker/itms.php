@@ -19,51 +19,55 @@ class itms {
         "tvShow" => "TV Shows",
         "musicVideo" => "Music Videos",
         "audiobook" => "Audiobooks",
-        "software" => "Applications",
+	"software" => "Applications",
         "podcast" => "Podcasts",
         "iTunesU" => "iTunes U",
     );
 
-    public static $entities = array (
-        "music" => array(
-            "musicArtist"   => "Artist",
-            "musicTrack"    => "Track",
-            "album"         => "Album",
-            "musicVideo"    => "Music Video",
-            "mix"           => "iTunes Mix"
-        ),
-        "movie" => array(
-            "movieArtist"   => "Movie Artist",
-            "movie"         => "Movie"
-        ),
-        "podcast" => array(
-            "podcastAuthor" => "Podcast Author",
-            "podcast"       => "Podcast"
-        ),
-        "audiobook" => array(
-            "audiobookAuthor"   => "Author",
-            "audiobook"         => "Audiobook"
-        ),
-        "shortFilm" => array(
-            "shortFilmArtist"   => "Artist",
-            "shortFilm"         => "Short Film"
-        ),
-        "tvShow" => array(
-            "tvEpisode" => "TV Episode",
-            "tvSeason"  => "TV Season"
-        ),
-        "all" => array(
-            "movie"         => "Movie Title",
-            "album"         => "Album Title",
-            "allArtist"     => "Artists",
-            "podcast"       => "Podcasts",
-            "musicVideo"    => "Music Video",
-            "mix"           => "iTunes Mix",
-            "audiobook"     => "Audiobook",
-            "tvSeason"      => "TV Season",
-            "allTrack"      => "Everything"
-        )
-    );
+	public static $entities = array (
+                "software" => array(
+                    "softwareDeveloper" => "Developer",
+                    "software" => "iPhone Apps",
+                    "iPadSoftware" => "iPad Apps"
+                ),
+		"music" => array(
+			"musicArtist" => "Artist",
+			"musicTrack" => "Track",
+			"album" => "Album",
+			"musicVideo" => "Music Video",
+			"mix" => "iTunes Mix"
+		),
+		"movie" => array(
+			"movieArtist" => "Movie Artist",
+			"movie" => "Movie"
+		),
+		"podcast" => array(
+			"podcastAuthor" => "Podcast Author",
+			"podcast" => "Podcast"
+		),
+		"audiobook" => array(
+			"audiobookAuthor" => "Author",
+			"audiobook" => "Audiobook"
+		),
+		"shortFilm" => array(
+			"shortFilmArtist" => "Artist",
+			"shortFilm" => "Short Film"
+		),
+		"tvShow" => array(
+			"tvEpisode" => "TV Episode",
+			"tvSeason" => "TV Season"
+		),
+		"all" => array(
+			"movie" => "Movie Title",
+			"album" => "Album Title",
+			"allArtist" => "Artists",
+			"podcast" => "Podcasts",
+			"musicVideo" => "Music Video",
+			"mix" => "iTunes Mix",
+			"audiobook" => "Audiobook",
+			"tvSeason" => "TV Season",
+			"allTrack" => "Everything" )
+	);
 
     public static $countries = array (
         "AR" => "Argentina",
@@ -153,40 +157,43 @@ class itms {
         "VN" => "Vietnam",
     );
 
-    //private $source = "itmsSearch.html";
-    private $source;
-    private $partnerstuff;
+	//private $source = "itmsSearch.html";
+	private $source;
+	private $partnerstuff;
 
-    public function itms( )
-    {
-         $this->partnerstuff = itabase::setting('ita-partner');
-         $this->source = itabase::setting('ita-itmslm');
-    }
+	public function itms( )
+	{
+		 $this->partnerstuff = itabase::setting('ita-partner');
+		 $this->source = itabase::setting('ita-itmslm');
+	}
 
-    public function getResults( $term = "", $media = "all", $country = 'AU' )
-    {
-        $queryvars = $this->buildQueryVars( $term, $media, $country );
-        $url = $this->source.$queryvars;
+	public function getResults( $term = "", $media = "all", $country = 'AU', $entity = '' )
+	{
+		$queryvars = $this->buildQueryVars( $term, $media, $country, $entity );
+		$url = $this->source.$queryvars;
 
-        $results = wp_remote_get( $url, array( 'timeout' => 30 ) );
-        if ( is_wp_error( $results ) )
-            return new WP_Error( 'italm', __( 'Can\'t retrieve a result for your search' ) );
+		$results = wp_remote_get( $url, array( 'timeout' => 30 ) );
+		if ( is_wp_error( $results ) )
+			return new WP_Error( 'italm', __( 'Can\'t retrieve a result for your search' ) );
 
-        $results = wp_remote_retrieve_body( $results );
-//            $results = file_get_contents($url);
+		$results = wp_remote_retrieve_body( $results );
+		//$results = file_get_contents($url);
 
-        $arr = json_decode($results);
-//            var_dump($arr);
-//            exit;
-        return $arr;
-    }
+		$arr = json_decode($results);
+//		var_dump($arr);
+//		exit;
+		return $arr;
+	}
 
-    private function buildQueryVars($term,$media,$country )
-    {
-        $limit = "";
-        if(itabase::setting('ita-searchlimit') != '50' )
-            $limit = "&limit=".itabase::setting('ita-searchlimit');
-        return "&country=".$country."&term=".urlencode($term)."&media=".$media.$limit;
-    }
+	private function buildQueryVars($term,$media,$country,$entity )
+	{
+		$limit = "";
+
+		if(itabase::setting('ita-searchlimit') != itabase::$defaultSettings['ita-searchlimit'] )
+			$limit = "&limit=".itabase::setting('ita-searchlimit');
+                if(trim($entity != ''))
+                    $entity = "&entity=".$entity;
+		return "&country=".$country."&term=".urlencode($term)."&media=".$media.$entity.$limit;
+	}
 }
 ?>
