@@ -31,14 +31,12 @@ else
     $i = 0;
 	$ita_linkImage = ita::setting('ita-linkimage');
     foreach($resArr as $result) {
-//		var_dump($result);
-//		exit;
-        $realAlbumURL = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->collectionViewUrl);
-		$trackURL = $result->trackViewUrl;
-		$artistLink = $result->artistViewUrl;
+        $realAlbumURL   = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->collectionViewUrl);
+		$trackURL       = $result->trackViewUrl;
+		$artistLink     = $result->artistViewUrl;
 		
-		$trackName = $result->artistName.'-'.$result->trackName;
-		$albumName = $result->artistName.'-'.$result->collectionName;
+		$trackName      = $result->artistName.'-'.$result->trackName;
+		$albumName      = $result->artistName.'-'.$result->collectionName;
 
 
 		switch ($result->mediaType) {
