@@ -19,54 +19,216 @@ class itms {
         "tvShow" => "TV Shows",
         "musicVideo" => "Music Videos",
         "audiobook" => "Audiobooks",
-	"software" => "Applications",
+        "software" => "Applications",
         "podcast" => "Podcasts",
         "iTunesU" => "iTunes U",
     );
 
+    const ARTIST_LINK       = "<a href=\"{artistLinkUrl}\">{artistName}></a>";
+    const ARTIST_VIEW       = "<a href=\"{artistViewUrl}\">{artistName}</a>";
+    const TRACK_VIEW        = "<a href=\"{trackViewUrl}\">{trackName}</a>";
+    const COLLECTION_VIEW   = "<a href=\"{collectionViewUrl}\">{collectionName}</a>";
+    const PREVIEW_LINK      = "<a href=\"{previewUrl}\">preview</a>";
+
+    
 	public static $entities = array (
-                "software" => array(
-                    "softwareDeveloper" => "Developer",
-                    "software" => "iPhone Apps",
-                    "iPadSoftware" => "iPad Apps"
-                ),
+        "software" => array(
+            "softwareDeveloper" => array (
+                "name" => "Developer",
+                "columns" => array(
+                    "Name" => self::ARTIST_LINK
+                )
+            ),
+            "software" => array(
+                "name" => "iPhone Apps",
+                "columns" => array(
+                    "Name" => "<a href=\"{trackViewUrl}\">{trackName}</a>",
+                    "Developer" => self::ARTIST_VIEW,
+                    "Category" => "{genres[0]}",
+                    "Date" => "{releaseDate}",
+                )
+            ),
+            "iPadSoftware" => array (
+                "name" => "iPad Apps",
+                "columns" => array(
+                    "Name" => "<a href=\"{trackLinkUrl}\">{trackName}</a>",
+                    "Developer" => self::ARTIST_VIEW,
+                    "Category" => "{genres[0]}",
+                    "Date" => "{releaseDate}",
+                )
+            )
+        ),
 		"music" => array(
-			"musicArtist" => "Artist",
-			"musicTrack" => "Track",
-			"album" => "Album",
-			"musicVideo" => "Music Video",
-			"mix" => "iTunes Mix"
+			"musicArtist" => array( 
+                "name" => "Artist",
+                "columns" => array(
+                    "Name" => self::ARTIST_LINK,
+                    "Genre" => "{primaryGenreName}"
+                )
+            ),
+			"musicTrack" => array( 
+                "name" => "Track",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+			"album" => array(
+                "name" => "Album",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Album Name" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Date" => "{releaseDate}"
+                )
+            ),
+			"musicVideo" => array(
+                "name" => "Music Video",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+			"mix" => array( 
+                "name" => "iTunes Mix",
+                "columns" => array(
+                    "Mix Title" => "<a href=\"{collectionViewUrl}\">{title}</a>",
+                    "Artist" => "{artistName}"
+                )
+            )
 		),
 		"movie" => array(
-			"movieArtist" => "Movie Artist",
-			"movie" => "Movie"
+			"movieArtist" => array(
+                "name" => "Movie Artist",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"movie" => array(
+                "name" => "Movie",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            )
 		),
 		"podcast" => array(
-			"podcastAuthor" => "Podcast Author",
-			"podcast" => "Podcast"
+			"podcastAuthor" => array(
+                "name" => "Podcast Author",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"podcast" => array(
+                "name" => "Podcast",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            )
 		),
 		"audiobook" => array(
-			"audiobookAuthor" => "Author",
-			"audiobook" => "Audiobook"
+			"audiobookAuthor" => array(
+                "name" => "Author",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"audiobook" => array(
+                "name" => "Audiobook",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            )
 		),
 		"shortFilm" => array(
-			"shortFilmArtist" => "Artist",
-			"shortFilm" => "Short Film"
+			"shortFilmArtist" => array(
+                "name" => "Artist",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"shortFilm" => array(
+                "name" => "Short Film",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            )
 		),
 		"tvShow" => array(
-			"tvEpisode" => "TV Episode",
-			"tvSeason" => "TV Season"
+			"tvEpisode" => array(
+                "name" => "TV Episode",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"tvSeason" => array(
+                "name" => "TV Season",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            )
 		),
 		"all" => array(
-			"movie" => "Movie Title",
-			"album" => "Album Title",
-			"allArtist" => "Artists",
-			"podcast" => "Podcasts",
-			"musicVideo" => "Music Video",
-			"mix" => "iTunes Mix",
-			"audiobook" => "Audiobook",
-			"tvSeason" => "TV Season",
-			"allTrack" => "Everything" )
+			"movie" => array(
+                "name" => "Movie Title",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"album" => array(
+                "name" => "Album Title",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"allArtist" => array(
+                "name" => "Artists",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"podcast" => array(
+                "name" => "Podcasts",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"musicVideo" => array(
+                "name" => "Music Video",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"mix" => array(
+                "name" => "iTunes Mix",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"audiobook" => array(
+                "name" => "Audiobook",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"tvSeason" => array(
+                "name" => "TV Season",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+			"allTrack" => array(
+                "name" => "Everything",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            )
+        )
 	);
 
     public static $countries = array (

@@ -9,13 +9,17 @@
 </head>
 <body>
 <table class="ita-results" id="ita-results-head" width="100%">
-    <tr>
+<!--    <tr>
 			<th scope="col" width="227"><?php _e("Name"); ?></th>
             <th scope="col" width="221"><?php _e("Album"); ?></th>
             <th scope="col"><?php _e("Artist"); ?></th>
-    </tr>
+    </tr> -->
 </table>
     <div id="ita-results-scroll">
+        <pre>
+<?php //var_dump($resArr); ?>
+</pre>
+<?php //exit; ?>
 <table class="ita-results" id="ita-results-body" width="100%">
 <?php
 if(sizeof($resArr) < 1)
@@ -28,16 +32,30 @@ if(sizeof($resArr) < 1)
 }
 else
 {
+    $columns = itms::$entities[$media][$entity]['columns'];
     $i = 0;
 	$ita_linkImage = ita::setting('ita-linkimage');
+    ?>
+        <tr>
+    <?php
+    foreach( $columns as $colName => $column ) {
+        ?>
+            <th scope="col">
+                <?php echo $colName; ?>
+            </th>
+        <?php
+    }
+    ?>
+        </tr>
+    <?php
     foreach($resArr as $result) {
+
         $realAlbumURL   = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->collectionViewUrl);
 		$trackURL       = $result->trackViewUrl;
 		$artistLink     = $result->artistViewUrl;
 		
-		$trackName      = $result->artistName.'-'.$result->trackName;
-		$albumName      = $result->artistName.'-'.$result->collectionName;
-
+		$trackName      = $result->trackName;
+		$albumName      = $result->collectionName;
 
 		switch ($result->mediaType) {
 			case "music-video":
@@ -58,24 +76,30 @@ else
 			case "audiobook":
 				$trackName = $trackName.' (Audiobook)';
 				break;
+            case "music":
 			default:
 				$albumName = $albumName.' (Album)';
 				break;
 		}
-    ?>
+
+        ?>
             <tr>
-                    <td width="34%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
-						<a href="<?php echo($trackURL); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($trackName); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->trackName); ?></a>
-					</td>
-                    <td width="33%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
-						<a href="<?php echo($albumOnly ? $realAlbumURL : $result->collectionViewUrl); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($result->artistName.'-'.$result->collectionName.' (Album)'); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php echo($result->collectionName); ?></a>
-					</td>
-                    <td width="33%"<?php echo( $i == 0 ? ' class="odd"' : '' ); ?>>
-						<?php if(trim($artistLink) != "") : ?><a href="<?php echo($artistLink); ?>" onClick="italm_sendToEditor('<?php echo ita_js_escape($result->artistName); ?>',this.href,'<?php echo($ita_linkImage); ?>');return false;"><?php endif; echo($result->artistName); if(trim($artistLink) != "") : ?></a><?php endif; ?>
-					</td>
+        <?php
+        foreach( $columns as $key => $column ) {
+            $output = preg_replace('/\{([A-Za-z0-9\[\]]+)}/e',"\$result->\\1",$column);
+            ?>
+                <td>
+                    <?php
+                        echo $output;
+                    ?>
+                </td>
+            <?php
+        }
+        ?>
             </tr>
-    <?php
-            $i == 0 ? $i = 1 : $i = 0;
+        <?php
+
+        $i == 0 ? $i = 1 : $i = 0;
     }
 }
 ?>

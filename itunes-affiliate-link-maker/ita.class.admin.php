@@ -295,10 +295,10 @@ class ita extends itabase {
 				else
 					$country = ita::setting('ita_country');
 
-                                if( isset($_POST['ita-entity']))
-                                    $entity = $_POST['ita-entity'];
-                                else
-                                    $entity = "";
+                if( isset($_POST['ita-entity']))
+                    $entity = $_POST['ita-entity'];
+                else
+                    $entity = "";
 
 
 				$term = $_POST['ita-term'];

@@ -1,16 +1,4 @@
-<?php
-    $output = '';
-    foreach(itms::$entities as $ekey => $entity) {
-        $output .= "['$ekey': [";
-        foreach($entity as $skey => $subentity) {
-            $output .= "['$skey': '$subentity'],";
-        }
-        $output = trim($output," ,");
-        $output .= "]],";
-    }
-    $output = trim($output," ,");
-?>
-<script type="text/javascript" language="javascript">
+\<script type="text/javascript" language="javascript">
     function itaswitch()
     {
         jQuery('#itasearch,#itamanual').slideToggle('fast');
@@ -29,9 +17,13 @@
     function mediaOnChange(object) {
         key = object.value;
         entity = entities[key];
+        
+        jQuery("#ita-entity").children().remove();
+        jQuery(new Option('All', 'all' )).appendTo('#ita-entity');
+        
         for ( sub in entity )
         {
-            jQuery(new Option(entity[sub], sub )).appendTo('#ita-entity');
+            jQuery(new Option(entity[sub]['name'], sub)).appendTo('#ita-entity');
         }
         jQuery('#ita-entity').attr('disabled','');
     }
@@ -62,7 +54,6 @@
                         <tbody id="itasearch">
                             <tr>
                                 <td width="130"><strong><?php _e("Country"); ?></strong></td>
-                                <td width="180"><strong><?php _e("Search"); ?></strong></td>
                                 <td width="130"><strong><?php _e("Media Type"); ?></strong></td>
                                 <td width="100"><strong><?php _e("Entity"); ?></strong></td>
                                 <td width="90"></td>
@@ -79,8 +70,6 @@
 										}
 									?>
                                     </select></td>
-
-                                <td><input type="text" value="" name="ita-term" id="ita-term" tabindex="22"/></td>
                                 <td><select name="ita-media" id="ita-media" onchange="mediaOnChange(this);" tabindex="23">
                                         <?php
 										$selectedMedia = ita::setting('ita-defaultmedia');
@@ -96,6 +85,9 @@
                                     <option value="">All</option>
                                 </select></td>
                                 <td align="right"><input type="submit" value="<?php _e("Search"); ?>" class="button-secondary action" tabindex="26" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><input type="text" value="" name="ita-term" id="ita-term" tabindex="22"/></td>
                             </tr>
                         </tbody>
                     </table>

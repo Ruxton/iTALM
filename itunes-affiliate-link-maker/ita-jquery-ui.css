@@ -400,11 +400,15 @@ Generic ThemeRoller Classes
 
 /* Note: for resizable styles, use the styles listed above in the dialog section */
 
-#ita-country,#ita-term,#ita-media,#ita-manualurl {
+#ita-country,#ita-term,#ita-media,#ita-manualurl,#ita-entity {
     height: 25px;
     border: 1px solid #d3d3d3;
     width: 210px;
     margin: 0;
+}
+
+#ita-term {
+    width: 634px;
 }
 
 #ita-manualurl {
