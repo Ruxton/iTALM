@@ -86,9 +86,13 @@ else
             <tr>
         <?php
         foreach( $columns as $key => $column ) {
+            if( $key == "Name" || $key == "Artist" || $key == "Track Name" || $key == "Album Name" || $key == "Developer" )
+                $width = ' width="200"';
+            else
+                $width = '';
             $output = preg_replace('/\{([A-Za-z0-9\[\]]+)}/e',"\$result->\\1",$column);
             ?>
-                <td>
+                <td<?php echo $width; ?>>
                     <?php
                         echo $output;
                     ?>
