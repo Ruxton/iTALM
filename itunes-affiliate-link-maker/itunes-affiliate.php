@@ -28,6 +28,7 @@ Version:		0.5.3
 //define('WP_DEBUG', false);
 
 include dirname(__FILE__)."/itms.php";
+include_once(dirname(__FILE__).'/libs/logger.php');
 require_once(dirname(__FILE__).'/ita.class.base.php');
 
 function ita_getDisplayTemplate($file) {
@@ -167,7 +168,6 @@ function ita_sanitize_title($title) {
 		$title = utf8_uri_encode($title, 200);
 	}
 
-	//$title = strtolower($title);
 	$title = preg_replace('/&.+?;/', '', $title); // kill entities
 	$title = preg_replace('/[^%a-zA-Z0-9 ()_-]/', '', $title);
 	$title = preg_replace('/\s+/', '_', $title);

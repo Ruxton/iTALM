@@ -7,6 +7,15 @@
 	<target name="init">
 		<echo />
 	</target>
+    <target name="checkout">
+        <echo message="Checking out plugin from SVN to ${dir.svn}" />
+        <!-- http://svn.wp-plugins.org/itunes-affiliate-link-maker -->
+
+        <exec executable="svn" dir="${dir.svn}">
+            <arg line="co http://svn.wp-plugins.org/itunes-affiliate-link-maker" />
+        </exec>
+
+    </target>
 	<target name="devtest">
 		<echo message="Setting up dev environment.." />
 		<echo message="Copying to ${dir.dev}.." />
