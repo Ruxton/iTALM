@@ -16,10 +16,6 @@
     </tr> -->
 </table>
     <div id="ita-results-scroll">
-        <pre>
-<?php Logger::instance()->log(print_r($resArr,true)); ?>
-</pre>
-<?php //exit; ?>
 <table class="ita-results" id="ita-results-body" width="100%">
 <?php
 if(sizeof($resArr) < 1)

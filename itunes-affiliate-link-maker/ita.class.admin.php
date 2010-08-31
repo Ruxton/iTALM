@@ -271,7 +271,7 @@ class ita extends itabase {
 			{
 					$queryRes = $wpdb->get_results('SELECT * FROM '.$tableName.' ORDER BY updateTime DESC LIMIT '.$pageLimit.','.$perPage,OBJECT );
 					if(sizeof($queryRes) < 1)
-						die('Error, no history results');
+						die('No history to display');
 					else
 					{
 						include ita_getDisplayTemplate("itms-result-history.php");

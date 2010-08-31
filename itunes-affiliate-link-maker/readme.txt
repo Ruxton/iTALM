@@ -22,6 +22,12 @@ standard link generator does not normally do.
 iTALM also keeps track of recently clicked links and offers them up for clicking prior to
 searching, while also offering a link masking to hide your affiliate junk from captain smarty pants.
 
+As of 0.5.3 it now supports search on entities, What does this mean for you?
+* searching for iPhone/iPad apps individually and for software developers
+* searching specifically by artist/album/track name
+* search for movies by artists/studio
+* columns change based on the entity being searched for
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.

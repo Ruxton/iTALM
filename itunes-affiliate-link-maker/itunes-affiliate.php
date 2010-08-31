@@ -28,7 +28,6 @@ Version:		0.5.3
 //define('WP_DEBUG', false);
 
 include dirname(__FILE__)."/itms.php";
-include_once(dirname(__FILE__).'/libs/logger.php');
 require_once(dirname(__FILE__).'/ita.class.base.php');
 
 function ita_getDisplayTemplate($file) {
