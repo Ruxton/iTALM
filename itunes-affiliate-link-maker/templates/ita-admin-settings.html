@@ -16,34 +16,34 @@
 		}
 	?>
     <tr valign="top">
-        <th scope="row"><?php _e("Masking URL"); ?></th>
+        <th scope="row"><?php _e('Masking URL'); ?></th>
         <td><input type="text" name="ita-maskurl" id="ita-maskurl" value="<?php echo ita::setting('ita-maskurl'); ?>"<?php echo $maskDisabled; ?>/><br/>
 			<input type="checkbox" name="ita-maskenable" id="ita-maskenable" value="1"<?php echo $maskChecked; ?>/>
-			<span class="setting-description"><?php _e("Mask links to your domain?"); ?><code>ie. /<?php echo ita::setting('ita-maskurl'); ?>/%linkname%</code></span></td>
+			<span class="setting-description"><?php _e('Mask links to your domain?'); ?><code>ie. /<?php echo ita::setting('ita-maskurl'); ?>/%linkname%</code></span></td>
     </tr>
 
     <tr valign=top">
-        <th scope="row"><?php _e("iTMS Link Generator URL"); ?></th>
+        <th scope="row"><?php _e('iTMS Link Generator URL'); ?></th>
         <td><input type="text" name="ita-itmslm" id="ita-itmslm" class="regular-text code" value="<?php echo ita::setting('ita-itmslm'); ?>" />
 			<a onclick="document.getElementById('ita-itmslm').value='<?php echo ita::$defaultSettings['ita-itmslm']; ?>';">Reset Link</a>
 			<br/>
-            <span class="setting-description"><?php _e("This is the URL for the iTunes Link maker"); ?></span></td>
+            <span class="setting-description"><?php _e('This is the URL for the iTunes Link maker'); ?></span></td>
     </tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Partner ID"); ?></th>
+        <th scope="row"><?php _e('Partner ID'); ?></th>
         <td><input type="text" name="ita-partner" class="regular-text code" value="<?php echo ita::setting('ita-partner'); ?>"/><br/>
 			<span class="setting-desription"><?php printf( __("The partner id, will be meged on the end of the link as <code>&partnerId=%s</code> <em>(dgmpro AU is 1002, linkshare USA is 30)</em>"),ita::setting('ita-partner') ); ?></span></td>
     </tr>
 
 	<tr valign="top">
-		<th scope="row"><?php _e("Partner URL"); ?></th>
+		<th scope="row"><?php _e('Partner URL'); ?></th>
         <td><input type="text" name="ita-partnerurl" class="regular-text code" value="<?php echo ita::setting('ita-partnerurl'); ?>"/><br/>
-			<span class="setting-description"><?php _e("Whatever you put in this box, will be merged onto the front of the link generated from the link generator"); ?> <br/>eg. i use <code>http://www.s2d6.com/x/?x=c&z=s&v=1887240&t=</code><br/>others use <code>http://click.linksynergy.com/fs-bin/stat?id=nIYMMwtWj4s&offerid=146261&type=3&subid=0&tmpid=1826&RD_PARM1=</code><br/><em>These codes are specific to users! don't use the example ones</em></span></td>
+			<span class="setting-description"><?php _e('Whatever you put in this box, will be merged onto the front of the link generated from the link generator'); ?> <br/>eg. i use <code>http://www.s2d6.com/x/?x=c&z=s&v=1887240&t=</code><br/>others use <code>http://click.linksynergy.com/fs-bin/stat?id=nIYMMwtWj4s&offerid=146261&type=3&subid=0&tmpid=1826&RD_PARM1=</code><br/><em>These codes are specific to users! don't use the example ones</em></span></td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><?php _e("Search Limit"); ?></th>
+		<th scope="row"><?php _e('Search Limit'); ?></th>
 		<td>
 			<select name="ita-searchlimit" class="regular-text">
                 <?php
@@ -55,17 +55,17 @@
                         <?php
                     }
                 ?>
-			</select><span class="setting-description"> <?php _e("The number of results to return from iTMS Link Generator"); ?></span></td>
+			</select><span class="setting-description"> <?php _e('The number of results to return from iTMS Link Generator'); ?></span></td>
 	</tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Default Link Image"); ?></th>
+        <th scope="row"><?php _e('Default Link Image'); ?></th>
         <td><input type="text" name="ita-linkimage" class="regular-text code" value="<?php echo ita::setting('ita-linkimage'); ?>"/><br/>
-            <span class="setting-description"><?php _e("URL of the image that will be used to link to the store when no text is selected."); ?></span></td>
+            <span class="setting-description"><?php _e('URL of the image that will be used to link to the store when no text is selected.'); ?></span></td>
     </tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Default Media Category"); ?></th>
+        <th scope="row"><?php _e('Default Media Category'); ?></th>
         <td><select name="ita-defaultmedia" id="ita-defaultmedia" tabindex="21">
                 <?php
                     $selectedMedia = ita::setting('ita-defaultmedia');
@@ -76,12 +76,12 @@
                         <?php
                     }
                 ?>
-            </select><br/><span class="setting-description"><?php _e("The popup window will default to this media type everytime it loads."); ?></span>
+            </select><br/><span class="setting-description"><?php _e('The popup window will default to this media type everytime it loads.'); ?></span>
         </td>
     </tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Default Country"); ?></th>
+        <th scope="row"><?php _e('Default Country'); ?></th>
         <td>
             <select name="ita-defaultcountry" id="ita-defaultcountry" tabindex="21" >
             <?php
@@ -93,28 +93,28 @@
                     <?php
                 }
             ?>
-            </select><br/><span class="setting-description"><?php _e("The popup window will default to this country everytime it loads."); ?></span>
+            </select><br/><span class="setting-description"><?php _e('The popup window will default to this country everytime it loads.'); ?></span>
         </td>
     </tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Fix Album URL By Default?"); ?></th>
+        <th scope="row"><?php _e('Fix Album URL By Default?'); ?></th>
         <?php
             $checked = '';
             if( ita::setting('ita-defaultalbfix') == 1)
                 $checked = ' CHECKED';
         ?>
-        <td><input type="checkbox" name="ita-defaultalbfix" value="1"<?php echo $checked; ?>/> <span class="setting-description"><?php _e("Normally the links returned on the album line of iTMS Link Generator are directly to the song, this ensures the link is directly to the album."); ?></span></td>
+        <td><input type="checkbox" name="ita-defaultalbfix" value="1"<?php echo $checked; ?>/> <span class="setting-description"><?php _e('Normally the links returned on the album line of iTMS Link Generator are directly to the song, this ensures the link is directly to the album.'); ?></span></td>
     </tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Clean up on de-activate?"); ?></th>
+        <th scope="row"><?php _e('Clean up on de-activate?'); ?></th>
         <?php
             $cleanupChecked = '';
             if( ita::setting('ita-cleanup') == 1)
                 $cleanupChecked = ' CHECKED';
         ?>
-        <td><input type="checkbox" name="ita-cleanup" value="1"<?php echo $cleanupChecked; ?>/> <span class="setting-description"><?php _e("If this checkbox is active iTALM will remove all settings when de-activated. <strong><em>(Not Recommended)</em></strong>"); ?></span></td>
+        <td><input type="checkbox" name="ita-cleanup" value="1"<?php echo $cleanupChecked; ?>/> <span class="setting-description"><?php _e('If this checkbox is active iTALM will remove all settings when de-activated. <strong><em>(Not Recommended)</em></strong>'); ?></span></td>
     </tr>
 
 </table>

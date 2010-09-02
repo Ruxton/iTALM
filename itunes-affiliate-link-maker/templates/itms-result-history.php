@@ -10,8 +10,8 @@
 <body>
 <table class="ita-results" id="ita-results-head" width="100%">
     <tr>
-	    <th scope="col" width="482" ><?php _e("Name"); ?></th>
-            <th scope="col" ><?php _e("Date"); ?></th>
+	    <th scope="col" width="482" ><?php _e('Name'); ?></th>
+            <th scope="col" ><?php _e('Date'); ?></th>
     </tr>
 </table>
     <div id="ita-results-scroll">

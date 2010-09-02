@@ -10,9 +10,9 @@
 <body>
 <table class="ita-results" id="ita-results-head" width="100%">
 <!--    <tr>
-			<th scope="col" width="227"><?php _e("Name"); ?></th>
-            <th scope="col" width="221"><?php _e("Album"); ?></th>
-            <th scope="col"><?php _e("Artist"); ?></th>
+			<th scope="col" width="227"><?php _e('Name'); ?></th>
+            <th scope="col" width="221"><?php _e('Album'); ?></th>
+            <th scope="col"><?php _e('Artist'); ?></th>
     </tr> -->
 </table>
     <div id="ita-results-scroll">
@@ -46,37 +46,37 @@ else
     <?php
     foreach($resArr as $result) {
 
-        $realAlbumURL   = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->collectionViewUrl);
-		$trackURL       = $result->trackViewUrl;
-		$artistLink     = $result->artistViewUrl;
-		
-		$trackName      = $result->trackName;
-		$albumName      = $result->collectionName;
+//        $realAlbumURL   = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->collectionViewUrl);
+//		$trackURL       = $result->trackViewUrl;
+//		$artistLink     = $result->artistViewUrl;
+//
+//		$trackName      = $result->trackName;
+//		$albumName      = $result->collectionName;
 
-		switch ($result->mediaType) {
-			case "music-video":
-				$trackName = $trackName.' (Music Video)';
-				$albumName = $albumName.' (Album)';
-				break;
-			case "tv-episode":
-				$trackName = $trackName.' (TV)';
-				$albumName = $albumName.' (TV Season)';
-				break;
-			case "podcast":
-				$trackName = $trackName.' (Podcast)';
-				$albumName = $albumName.' (Podcast Directory)';
-				break;
-			case "feature-movie":
-				$trackName = $trackName.' (Movie)';
-				break;
-			case "audiobook":
-				$trackName = $trackName.' (Audiobook)';
-				break;
-            case "music":
-			default:
-				$albumName = $albumName.' (Album)';
-				break;
-		}
+//		switch ($result->mediaType) {
+//			case "music-video":
+//				$trackName = $trackName.' (Music Video)';
+//				$albumName = $albumName.' (Album)';
+//				break;
+//			case "tv-episode":
+//				$trackName = $trackName.' (TV)';
+//				$albumName = $albumName.' (TV Season)';
+//				break;
+//			case "podcast":
+//				$trackName = $trackName.' (Podcast)';
+//				$albumName = $albumName.' (Podcast Directory)';
+//				break;
+//			case "feature-movie":
+//				$trackName = $trackName.' (Movie)';
+//				break;
+//			case "audiobook":
+//				$trackName = $trackName.' (Audiobook)';
+//				break;
+//            case "music":
+//			default:
+//				$albumName = $albumName.' (Album)';
+//				break;
+//		}
 
         ?>
             <tr>

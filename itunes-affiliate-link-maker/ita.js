@@ -53,7 +53,7 @@
 				author : 'Greg Tangey',
 				authorurl : 'http://ignite.digitalignition.net/',
 				infourl : 'http://ignite.digitalignition.net/',
-				version : "0.2"
+				version : "0.5.3"
 			};
 		}
 	});

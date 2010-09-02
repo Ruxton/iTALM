@@ -32,6 +32,9 @@ class itms {
 
     
 	public static $entities = array (
+        "ping" => array(
+          
+        ),
         "software" => array(
             "softwareDeveloper" => array (
                 "name" => "Developer",
