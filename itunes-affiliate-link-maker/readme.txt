@@ -76,5 +76,5 @@ If you've come from a previous version of iTALM and you're not doing a fresh ins
 done some monkey patching to side step previous installation issues.  For example, some of you modified the ita-version variable,
 this is used to detect upgradability, if you're using 0.5.2 please set it to 0.1 before proceeding with the upgrade.  On this, future
 versions from (0.5.3 forward) will set this to the current version number, it was supposed to just be a database version number, but
-all these different version numbers are obviously confusion people (me included), so from now on everything to do with iTALM will carry
+all these different version numbers are obviously confusing people (me included), so from now on everything to do with iTALM will carry
 the version number of the plugin it came from (this includes the plugin for tinyMCE support).

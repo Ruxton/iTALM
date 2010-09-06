@@ -49,8 +49,8 @@ class ita extends itabase {
 	function italm_upgrade_check( )
 	{
 		$version = ita::setting('ita-version');
-		if($version == '0')
-			add_action( 'admin_notices', array(&$this, 'italm_upgrade_notice') );
+		if($version < ita::$defaultSettings['ita-version'] )
+            add_action( 'admin_notices', array(&$this, 'italm_upgrade_notice') );
 	}
 
 	function italm_upgrade_notice( )
@@ -70,74 +70,41 @@ class ita extends itabase {
 	}
 
 
+    /**
+     * Upgrades the database from previous versions to the current db version.
+     * Shouldn't enter this function unless offered an upgrade from above functions.
+     * 
+     * @global $wpdb $wpdb
+     */
 	function italm_upgrade( )
 	{
 		global $wpdb;
 		$tableName = $wpdb->prefix.'italm';
 		
-		$partnerStuff = itabase::setting('ita-partner');
+        $version = itabase::setting('ita-version');
 
-		$temp = split('&',$partnerStuff);
-		array_shift($temp);
-		$options = array( );
-		foreach($temp as $option)
-		{
-			$res = split('=',$option);
-			$name = $res[0];
-			$options[$name] = ($name == "partnerUrl") ? urldecode($res[1]) : $res[1];
-		}
-		if(trim($options["partnerUrl"]) != "")
-		{
-			$query = 'SELECT * FROM '.$tableName.' WHERE linkUrl LIKE(\''.$options["partnerUrl"].'%\');';
-			$res = $wpdb->get_results( $query, ARRAY_A );
-			$updates = array( );
-			if(sizeof($res) > 0)
-			{
-				foreach($res as $link)
-				{
-					$linkid = $link['linkid'];
-					$newlink = urldecode(trim( str_replace( $options['partnerUrl'],'', $link['linkUrl'] ) ));
-					$newlink = str_replace('&partnerId='.$options['partnerId'],'',$newlink);
-					$updates[$linkid]['url'] = $newlink;
-					$updates[$linkid]['name'] = $link['linkName'];
-				}
-			}
-		}
-		if(isset($_GET['proceed']))
-		{
-			$token = get_option('italm-upgrade-token','');
-			if(trim($token) != "" && $_GET['proceed'] == $token)
-			{
-				foreach($updates as $id => $link)
-				{
-					print "[".$id."] Updating ".$link['name']." to ".$link['url']."<br/>";
-					$url = $link["url"];
-					$newLinkName = ita_sanitize_title($link["name"]);
-					if(!$wpdb->update( $tableName, array( 'linkUrl' => $url, 'linkName' => $newLinkName ), array( 'linkid' => $id ), array( '%s' ), array( '%d' ) ))
-					{
-						
-					}
-				}
-				update_option('ita-partner',$options['partnerId']);
-				update_option('ita-partnerurl',$options['partnerUrl']);
-				update_option('ita-version','0.1');
-				$wpdb->query( $wpdb->prepare( "DELETE FROM wp_options WHERE option_name = %s;",'italm-upgrade-token' ) );
-			}
-			else
-			{
-				$err = '<div class="wrap"><h2>Error Upgrading iTALM</h2><div class="error" ><p><strong>Error Upgrading</strong> - Please return to <a href="'.admin_url("options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade").'">upgrade page</a></p></div></div>';
-				print($err);
-			}
-			print "All done.";
-		}
-		else
-		{
-			$tokenval = md5(time().get_option('siteurl'));
-			update_option('italm-upgrade-token', $tokenval);
-			include ita_getDisplayTemplate('ita-upgrade.php');
-		}
+
+        // The very first upgrade, this could really break
+        if( $version > floatval(0)  && $version < floatval('0.5') )
+        {
+            include "upgrades/0.1.php";
+        }
+        elseif( $version > floatval('0.5') && $version < floatval('0.5.3') )
+        {
+            include "upgrades/0.5.3.php";
+        }
+        else
+        {
+            print "It's possible you're already upgraded, if you believe this to not be the case, please contact me.";
+        }
 	}
 
+    /**
+     * Function updates a links last used date whenever the link is clicked inside
+     * the italm popup window in the editor
+     *
+     * @global $wpdb $wpdb
+     */
 	function italm_update_link( )
 	{
 		global $wpdb;
@@ -149,6 +116,13 @@ class ita extends itabase {
 		$wpdb->update($tableName, array( 'updateTime' => time() ), array( 'linkUrl' => $linkUrl ), array('%d'), array('%s') );
 	}
 
+    /**
+     * Function handles the response from the popup windows search request, the
+     * function name italm_ajax_it is a little misleading as there is no longer
+     * any ajax stuff going on.
+     * 
+     * @global  $wpdb
+     */
 	function italm_ajax_it( )
 	{
 		global $wpdb;
@@ -238,7 +212,8 @@ class ita extends itabase {
 	}
 
 	/**
-	 * Runs when you have the cleanup on de-activation box checked and runs uninstall.
+	 * This function runs whenever the plugin is de-activated, if cleanup upon
+     * de-activate is ticked, it will cleanup the database.
 	 */
 	function italm_deactivate( )
 	{
@@ -250,7 +225,7 @@ class ita extends itabase {
 
 
 	/**
-	 * Talks to iTMS, gets JSON response, dislays table in iFrame
+	 * Talks to iTMS API, gets JSON response, dislays table in iFrame
 	 * exits.
 	 */
 	function ita_handle_search( )
@@ -352,24 +327,25 @@ class ita extends itabase {
 	 */
 	function ita_jquery_dialog_div( )
 	{
-			global $wpdb;
-			$tableName = $wpdb->prefix.'italm';
-			require_once(dirname(__FILE__).'/libs/pagination.php');
-			$countHistory = $wpdb->get_col('SELECT count(*) as rows FROM '.$tableName.';');
-			$countHistory = $countHistory[0];
-			
-			//Build up a pagination line
-			$pagination = new Pagination( );
-			$pagination->setURL('?ita-omg=1', '" target="itms-link-maker');
-			$pagination->setTotalResults($countHistory);
-			$pagination->setCurrentPage(-1);
-			$pagination->setMaxItems(20);
-			$pagination->linksFormat('', ',', '');
-            include ita_getDisplayTemplate('ita-admin-popup.html');
+        global $wpdb;
+        $tableName = $wpdb->prefix.'italm';
+        require_once(dirname(__FILE__).'/libs/pagination.php');
+        $countHistory = $wpdb->get_col('SELECT count(*) as rows FROM '.$tableName.';');
+        $countHistory = $countHistory[0];
+
+        //Build up a pagination line
+        $pagination = new Pagination( );
+        $pagination->setURL('?ita-omg=1', '" target="itms-link-maker');
+        $pagination->setTotalResults($countHistory);
+        $pagination->setCurrentPage(-1);
+        $pagination->setMaxItems(20);
+        $pagination->linksFormat('', ',', '');
+        
+        include ita_getDisplayTemplate('ita-admin-popup.html');
 	}
 
 	/**
-	 * Adds menu to the settings page
+	 * Adds menu to the settings page, also would like to add history page
 	 */
 	function ita_menus( )
 	{

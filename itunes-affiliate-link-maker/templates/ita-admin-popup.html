@@ -1,14 +1,19 @@
-\<script type="text/javascript" language="javascript">
+<script type="text/javascript" language="javascript">
+    jQuery(document).ready(function() {
+        jQuery('#itamanual').hide();
+    });
+
     function itaswitch()
     {
-        jQuery('#itasearch,#itamanual').toggle('fast');
         if(jQuery('#ita-switchclick').html() == 'Manual Url?')
         {
             jQuery('#ita-switchclick').html('iTMS Search?');
+            jQuery('#itamanual,#itasearch').slideToggle('fast');
         }
         else
         {
             jQuery('#ita-switchclick').html('Manual Url?')
+            jQuery('#itasearch,#itamanual').slideToggle('fast');
         }
     }
 
@@ -41,7 +46,7 @@
                     <p>History: <?php echo($pagination->generate());?><span style="float: right;"><a id="ita-switchclick" onclick="itaswitch();" for="ita-showmanual">Manual Url?</a> | <label for="ita-album-only"><?php _e('Correct Album URL:'); ?></label> <input type="checkbox" id="ita-album-only" name="ita-album-only" value="1" tabindex="25"<?php echo $checked; ?>/></span></p>
 
                     <table width="700" border="0" cellspacing="2" cellpadding="0" id="ita-table">
-                        <tbody id="itamanual" style="display: none;">
+                        <tbody id="itamanual">
                             <tr>
                                 <td><strong><?php _e('Manual URL Entry'); ?></strong></td>
                             </tr>
