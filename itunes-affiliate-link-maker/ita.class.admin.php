@@ -281,6 +281,7 @@ class ita extends itabase {
 
 				$results = $itms->getResults($term,$media,$country,$entity);
 				$resArr = $results->results;
+
 				include ita_getDisplayTemplate("itms-results.php");
 			}
 			exit;

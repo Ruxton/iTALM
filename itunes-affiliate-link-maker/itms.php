@@ -24,6 +24,9 @@ class itms {
         "iTunesU" => "iTunes U",
     );
 
+    // Timeout variable for remote connection to App Store API
+    const __REMOTE_TIMEOUT  = 30;
+    
     const ARTIST_LINK       = "<a href=\"{artistLinkUrl}\">{artistName}></a>";
     const ARTIST_VIEW       = "<a href=\"{artistViewUrl}\">{artistName}</a>";
     const TRACK_VIEW        = "<a href=\"{trackViewUrl}\">{trackName}</a>";
@@ -110,13 +113,16 @@ class itms {
 			"movieArtist" => array(
                 "name" => "Movie Artist",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Artist" => self::ARTIST_LINK,
+                    "Primary Genre" => "{primaryGenreName}"
                 )
             ),
 			"movie" => array(
                 "name" => "Movie",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Name" => self::TRACK_VIEW,
+                    "Studio" => self::ARTIST_VIEW,
+                    "Preview" => self::PREVIEW_LINK
                 )
             )
 		),
@@ -124,13 +130,14 @@ class itms {
 			"podcastAuthor" => array(
                 "name" => "Podcast Author",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Name" => self::ARTIST_VIEW,
                 )
             ),
 			"podcast" => array(
                 "name" => "Podcast",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Podcast" => self::TRACK_VIEW,
+                    "Preview" => self::PREVIEW_LINK
                 )
             )
 		),
@@ -138,27 +145,28 @@ class itms {
 			"audiobookAuthor" => array(
                 "name" => "Author",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Name" => self::ARTIST_LINK,
                 )
             ),
 			"audiobook" => array(
                 "name" => "Audiobook",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Name" => self::COLLECTION_VIEW,
+                    "Preview" => self::PREVIEW_LINK
                 )
             )
 		),
 		"shortFilm" => array(
 			"shortFilmArtist" => array(
-                "name" => "Artist",
+                "name" => "Studio",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Studio" =>  self::ARTIST_LINK
                 )
             ),
 			"shortFilm" => array(
                 "name" => "Short Film",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Name" => self::TRACK_VIEW
                 )
             )
 		),
@@ -166,13 +174,17 @@ class itms {
 			"tvEpisode" => array(
                 "name" => "TV Episode",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Show" => self::ARTIST_VIEW,
+                    "Season" => self::COLLECTION_VIEW,
+                    "Episode" => self::TRACK_VIEW,
+                    "Preview" => self::PREVIEW_LINK
                 )
             ),
 			"tvSeason" => array(
                 "name" => "TV Season",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Show" => self::ARTIST_VIEW,
+                    "Season" => self::COLLECTION_VIEW
                 )
             )
 		),
@@ -337,7 +349,7 @@ class itms {
 		$queryvars = $this->buildQueryVars( $term, $media, $country, $entity );
 		$url = $this->source.$queryvars;
 
-		$results = wp_remote_get( $url, array( 'timeout' => 30 ) );
+		$results = wp_remote_get( $url, array( 'timeout' => itms::__REMOTE_TIMEOUT ) );
 		if ( is_wp_error( $results ) )
 			return new WP_Error( 'italm', __( 'Can\'t retrieve a result for your search' ) );
 
