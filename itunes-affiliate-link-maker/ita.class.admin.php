@@ -95,7 +95,7 @@ class ita extends itabase {
         }
         else
         {
-            print "It's possible you're already upgraded, if you believe this to not be the case, please contact me.";
+            print "It's possible you're already upgraded, if you believe this to not be the case, please get some help.";
         }
 	}
 
@@ -281,7 +281,6 @@ class ita extends itabase {
 
 				$results = $itms->getResults($term,$media,$country,$entity);
 				$resArr = $results->results;
-
 				include ita_getDisplayTemplate("itms-results.php");
 			}
 			exit;

@@ -35,9 +35,6 @@ class itms {
 
     
 	public static $entities = array (
-        "ping" => array(
-          
-        ),
         "software" => array(
             "softwareDeveloper" => array (
                 "name" => "Developer",
@@ -192,31 +189,42 @@ class itms {
 			"movie" => array(
                 "name" => "Movie Title",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Name" => self::TRACK_VIEW,
+                    "Studio" => self::ARTIST_VIEW,
+                    "Preview" => self::PREVIEW_LINK
                 )
             ),
 			"album" => array(
                 "name" => "Album Title",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Artist" => self::ARTIST_VIEW,
+                    "Album Name" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Date" => "{releaseDate}"
                 )
             ),
 			"allArtist" => array(
                 "name" => "Artists",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Name" => self::ARTIST_LINK,
+                    "Genre" => "{primaryGenreName}"
                 )
             ),
 			"podcast" => array(
                 "name" => "Podcasts",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Podcast" => self::TRACK_VIEW,
+                    "Preview" => self::PREVIEW_LINK
                 )
             ),
 			"musicVideo" => array(
                 "name" => "Music Video",
                 "columns" => array(
-                    "Name" => "<a href=\"{}\">{}</a>",
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
                 )
             ),
 			"mix" => array(
