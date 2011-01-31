@@ -22,6 +22,7 @@ if (isset($_GET['proceed'])) {
 
     if (trim($token) != "" && $_GET['proceed'] == $token) {
         update_option('ita-version', '0.5.3');
+        include ita_getDisplayTemplate('dbupgrade/upgrade-0.5.3_SUCCESS.php');
     }
 
     // Display a notice if the proceed token isn't correct
@@ -29,13 +30,12 @@ if (isset($_GET['proceed'])) {
         $err = '<div class="wrap"><h2>Error Upgrading iTALM</h2><div class="error" ><p><strong>Error Upgrading</strong> - Please return to <a href="' . admin_url("options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade") . '">upgrade page</a></p></div></div>';
         print($err);
     }
-    print "Completed, thank you.";
 }
 
 // Display upgrade notice and create a proceed token
 else {
     $tokenval = md5(time() . get_option('siteurl'));
     update_option('italm-upgrade-token', $tokenval);
-    include ita_getDisplayTemplate('upgrades/upgrade-0.5.3.php');
+    include ita_getDisplayTemplate('dbupgrades/upgrade-0.5.3.php');
 }
 ?>

@@ -49,13 +49,13 @@ class ita extends itabase {
 	function italm_upgrade_check( )
 	{
 		$version = ita::setting('ita-version');
-		if($version < ita::$defaultSettings['ita-version'] )
+		if($version < floatval(ita::$defaultSettings['ita-version']) )
             add_action( 'admin_notices', array(&$this, 'italm_upgrade_notice') );
 	}
 
 	function italm_upgrade_notice( )
 	{
-		$notice = '<div class="error"><p>' . sprintf( __( "<strong>WARNING:</strong> Your version of iTALM requires upgrading please visit the <a href=\"%s\">upgrade page</a>."), admin_url('options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade')  ) . "</p></div>\n";
+		$notice = '<div class="error"><p>' . sprintf( __( "<strong>WARNING:</strong> Your new version of iTALM requires some database updates, please visit the <a href=\"%s\">upgrade page</a>."), admin_url('options-general.php?page=itunes-affiliate-link-maker/ita.class.admin.php&italm=upgrade')  ) . "</p></div>\n";
 		if( isset($_GET['italm']) && isset($_GET['page']) )
 		{
 			if($_GET['italm'] != "upgrade")
@@ -81,21 +81,21 @@ class ita extends itabase {
 		global $wpdb;
 		$tableName = $wpdb->prefix.'italm';
 		
-        $version = itabase::setting('ita-version');
+        $version = floatval(itabase::setting('ita-version'));
 
 
         // The very first upgrade, this could really break
-        if( $version > floatval(0)  && $version < floatval('0.5') )
+        if( $version > floatval('0')  && $version < floatval('0.1') )
         {
-            include "upgrades/0.1.php";
+            include WP_PLUGIN_DIR . "/itunes-affiliate-link-maker/dbupgrades/0.1.php";
         }
-        elseif( $version > floatval('0.5') && $version < floatval('0.5.3') )
+        elseif( $version >= floatval('0.1') && $version < floatval('0.5.3') )
         {
-            include "upgrades/0.5.3.php";
+            include WP_PLUGIN_DIR . "/itunes-affiliate-link-maker/dbupgrades/0.5.3.php";
         }
         else
         {
-            print "It's possible you're already upgraded, if you believe this to not be the case, please get some help.";
+            include ita_getDisplayTemplate('dbupgrades/upgrade-noneed.php');
         }
 	}
 

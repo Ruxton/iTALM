@@ -14,6 +14,7 @@ foreach ($temp as $option) {
     $name = $res[0];
     $options[$name] = ($name == "partnerUrl") ? urldecode($res[1]) : $res[1];
 }
+
 if (trim($options["partnerUrl"]) != "") {
     $query = 'SELECT * FROM ' . $tableName . ' WHERE linkUrl LIKE(\'' . $options["partnerUrl"] . '%\');';
     $res = $wpdb->get_results($query, ARRAY_A);
@@ -60,6 +61,6 @@ if (isset($_GET['proceed'])) {
 else {
     $tokenval = md5(time() . get_option('siteurl'));
     update_option('italm-upgrade-token', $tokenval);
-    include ita_getDisplayTemplate('upgrades/upgrade-0.1.php');
+    include ita_getDisplayTemplate('dbupgrades/upgrade-0.1.php');
 }
 ?>
