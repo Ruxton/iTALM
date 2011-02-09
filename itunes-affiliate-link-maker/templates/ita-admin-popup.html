@@ -80,14 +80,23 @@
 										$selectedMedia = ita::setting('ita-defaultmedia');
 										foreach(itms::$media as $code=>$media)
 										{
-											?>
+										?>
                                         <option <?php echo($selectedMedia == $code ? 'SELECTED ': ''); ?>value="<?php echo($code); ?>"><?php echo($media); ?></option>
                                         <?php
 										}
 									?>
                                     </select></td>
-                                <td><select name="ita-entity" id="ita-entity" tabindex="24" disabled="disabled">
-                                    <option value="">All</option>
+                                <td><select name="ita-entity" id="ita-entity" tabindex="24">
+                                    <option value="all">All</option>
+                                    <?php
+                                    $selectedMedia = ita::setting('ita-defaultmedia');
+                                    foreach(itms::$entities[$selectedMedia] as $entityVal=>$entity)
+                                    {
+                                        ?>
+                                        <option value="<?php echo $entityVal; ?>"><?php echo $entity['name']; ?></option>
+                                        <?php
+                                    }
+                                    ?>
                                 </select></td>
                                 <td align="right"><input type="submit" value="<?php _e('Search'); ?>" class="button-secondary action" tabindex="26" /></td>
                             </tr>

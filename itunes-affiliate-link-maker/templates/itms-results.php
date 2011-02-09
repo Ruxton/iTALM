@@ -5,15 +5,12 @@
 <script type='text/javascript' src='<?php echo get_option('site_url'); ?>/wp-includes/js/tw-sack.js?ver=1.6.1'></script>
 <script type="text/javascript" language="javascript" src="<?php echo get_option('site_url'); ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.js">
 </script>
+<script type="text/javascript" language="javascript">var italmLinkImage='<?php echo ita::setting('ita-linkimage'); ?>';</script>
 <link rel="stylesheet" type="text/css" href="<?php echo get_option('site_url'); ?>/wp-content/plugins/itunes-affiliate-link-maker/templates/common.css">
 </head>
 <body>
 <table class="ita-results" id="ita-results-head" width="100%">
-<!--    <tr>
-			<th scope="col" width="227"><?php _e('Name'); ?></th>
-            <th scope="col" width="221"><?php _e('Album'); ?></th>
-            <th scope="col"><?php _e('Artist'); ?></th>
-    </tr> -->
+    <!-- headings for results, populated by javascript -->
 </table>
     <div id="ita-results-scroll">
 <table class="ita-results" id="ita-results-body" width="100%">
@@ -45,39 +42,6 @@ else
         </tr>
     <?php
     foreach($resArr as $result) {
-
-//        $realAlbumURL   = preg_replace(array('/i%3D[0-9]+%26/','/i=[0-9]+&/'),array('',''),$result->collectionViewUrl);
-//		$trackURL       = $result->trackViewUrl;
-//		$artistLink     = $result->artistViewUrl;
-//
-//		$trackName      = $result->trackName;
-//		$albumName      = $result->collectionName;
-
-//		switch ($result->mediaType) {
-//			case "music-video":
-//				$trackName = $trackName.' (Music Video)';
-//				$albumName = $albumName.' (Album)';
-//				break;
-//			case "tv-episode":
-//				$trackName = $trackName.' (TV)';
-//				$albumName = $albumName.' (TV Season)';
-//				break;
-//			case "podcast":
-//				$trackName = $trackName.' (Podcast)';
-//				$albumName = $albumName.' (Podcast Directory)';
-//				break;
-//			case "feature-movie":
-//				$trackName = $trackName.' (Movie)';
-//				break;
-//			case "audiobook":
-//				$trackName = $trackName.' (Audiobook)';
-//				break;
-//            case "music":
-//			default:
-//				$albumName = $albumName.' (Album)';
-//				break;
-//		}
-
         ?>
             <tr>
         <?php

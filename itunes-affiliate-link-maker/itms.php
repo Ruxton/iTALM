@@ -27,10 +27,11 @@ class itms {
     // Timeout variable for remote connection to App Store API
     const __REMOTE_TIMEOUT  = 30;
     
-    const ARTIST_LINK       = "<a href=\"{artistLinkUrl}\">{artistName}></a>";
-    const ARTIST_VIEW       = "<a href=\"{artistViewUrl}\">{artistName}</a>";
-    const TRACK_VIEW        = "<a href=\"{trackViewUrl}\">{trackName}</a>";
-    const COLLECTION_VIEW   = "<a href=\"{collectionViewUrl}\">{collectionName}</a>";
+    const ARTIST_LINK       = "<a href=\"{artistLinkUrl}\" onClick=\"return italm_sendToEditor('{artistName}','{artistLinkUrl}',italmLinkImage);\">{artistName}</a>";
+    const ARTIST_VIEW       = "<a href=\"{artistViewUrl}\" onClick=\"return italm_sendToEditor('{artistName}','{artistViewUrl}',italmLinkImage);\">{artistName}</a>";
+    const TRACK_LINK        = "<a href=\"{trackLinkUrl}\" onClick=\"return italm_sendToEditor('{trackName}','{trackLinkUrl}',italmLinkImage);\">{trackName}</a>";
+    const TRACK_VIEW        = "<a href=\"{trackViewUrl}\" onClick=\"return italm_sendToEditor('{trackName}','{trackViewUrl}',italmLinkImage);\">{trackName}</a>";
+    const COLLECTION_VIEW   = "<a href=\"{collectionViewUrl}\" onClick=\"return italm_sendToEditor('{collectionName}','{collectionViewUrl}',italmLinkImage);\">{collectionName}</a>";
     const PREVIEW_LINK      = "<a href=\"{previewUrl}\">preview</a>";
 
     
@@ -45,7 +46,7 @@ class itms {
             "software" => array(
                 "name" => "iPhone Apps",
                 "columns" => array(
-                    "Name" => "<a href=\"{trackViewUrl}\">{trackName}</a>",
+                    "Name" => self::TRACK_VIEW,
                     "Developer" => self::ARTIST_VIEW,
                     "Category" => "{genres[0]}",
                     "Date" => "{releaseDate}",
@@ -54,7 +55,7 @@ class itms {
             "iPadSoftware" => array (
                 "name" => "iPad Apps",
                 "columns" => array(
-                    "Name" => "<a href=\"{trackLinkUrl}\">{trackName}</a>",
+                    "Name" => self::TRACK_LINK,
                     "Developer" => self::ARTIST_VIEW,
                     "Category" => "{genres[0]}",
                     "Date" => "{releaseDate}",
@@ -101,7 +102,7 @@ class itms {
 			"mix" => array( 
                 "name" => "iTunes Mix",
                 "columns" => array(
-                    "Mix Title" => "<a href=\"{collectionViewUrl}\">{title}</a>",
+                    "Mix Title" => "<a href=\"{collectionViewUrl}\" onClick=\"return italm_sendToEditor('{title}','{collectionViewUrl}',italmLinkImage);\">{title}</a>",
                     "Artist" => "{artistName}"
                 )
             )

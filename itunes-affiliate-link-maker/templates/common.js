@@ -11,6 +11,7 @@ function italm_sendToEditor(thestr,stuff,imglink)
 		thestr = origthestr;
 	}
 	italm_linkIt(thestr,stuff,imglink);
+    return false;
 }
 
 function italm_linkIt( thestr, thelink, linkimage )
