@@ -40,12 +40,12 @@ Upgrading from previous versions? backup prior to running the upgrade procedure.
 either editor.  Also if you're upgrading, please hit the reset link button next to the iTMS Link Generator URL
 in the settings area if you'd like to search for Apps.
 
-eg. [itunes url="<storeurl>" title="<alttag>"] outputs itunes link image with alt text
-and [itunes url="<storeurl>" title="<alttag>" content="<string>"] outputs the string in content instead of the image
+eg. `[itunes url="<storeurl>" title="<alttag>"]` outputs itunes link image with alt text
+and `[itunes url="<storeurl>" title="<alttag>" content="<string>"]` outputs the string in content instead of the image
 
 
 Meta
 ----
 
 * Code: `git clone git://github.com/ruxton/iTALM.git`
-* Home: <http://ignite.digitalignition.net/
+* Home: <http://ignite.digitalignition.net/>
