@@ -21,7 +21,7 @@ class itapub extends itabase
 		$query->is_404 = false;
 		$query->did_permalink = false;
 	}
-	
+
 	public function ita_request($query_vars) {
 		$query_vars['error'] = false;
 		if(isset($query_vars['pagename']))
@@ -40,15 +40,12 @@ class itapub extends itabase
 		else
 		{
 			global $wpdb;
-			
+
 			$tableName = $wpdb->prefix.'italm';
 
 			$linkName = str_replace(array(itabase::setting('ita-maskurl').'/'),array(''), $this->pagename );
-			print $linkName;
-			$query = sprintf("SELECT * FROM %s WHERE linkName = '%s'", $tableName, $linkName );
-			print $query;
+			$query = sprintf("SELECT * FROM %s WHERE linkName = '%s'", $tableName, urldecode($linkName) );
 			$row = $wpdb->get_row($query);
-			var_dump($row);
 			if(sizeof($row) < 1)
 			{
 				header(404);
@@ -70,7 +67,7 @@ class itapub extends itabase
 			}
 		}
 	}
-	
+
 }
 
 ?>
