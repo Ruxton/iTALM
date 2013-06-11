@@ -27,7 +27,7 @@
   <tr>
     <?php foreach( $columns as $colName => $column ) : ?>
       <th scope="col">
-          <?php echo $colName; ?>
+        <?php echo $colName; ?>
       </th>
     <?php endfor; ?>
   </tr>
@@ -36,9 +36,9 @@
     <?php foreach( $columns as $key => $column ) : ?>
       <?php
         if( $key == "Name" || $key == "Artist" || $key == "Track Name" || $key == "Album Name" || $key == "Developer" )
-            $width = ' width="180"';
+          $width = ' width="180"';
         else
-            $width = '';
+          $width = '';
         $output = preg_replace('/\{([A-Za-z0-9\[\]]+)}/e',"\$result->\\1",$column);
       ?>
       <td<?php echo $width; ?>>

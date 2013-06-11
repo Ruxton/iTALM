@@ -81,7 +81,7 @@ function ita_link($atts, $content = null )
 		$title = 'title="'.attribute_escape($title).'"';
 		$alt = 'alt="'.attribute_escape($title).'"';
 	}
-	
+
 	if($ita_mask != '1')
 	{
 		if( (trim($ita_prelink) != "") && (trim($ita_partnerid) != "") )
@@ -107,7 +107,7 @@ function ita_link($atts, $content = null )
 			}
 		}
 	}
-		
+
 	if($text == "")
 	{
 		$return = '<a href="'.$link.'" '.$title.'><img src="'.$ita_linkImage.'" width="61" height="16" '.$title.' /></a>';
@@ -131,7 +131,7 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
 
     if(ita::setting('ita-cleanup') == '1')
 		register_deactivation_hook(__FILE__, array(&$ita,'italm_deactivate'));
-		
+
 	register_uninstall_hook(__FILE__,array(&$ita,'italm_uninstall'));
 	register_activation_hook(__FILE__,array(&$ita,'italm_install'));
 
