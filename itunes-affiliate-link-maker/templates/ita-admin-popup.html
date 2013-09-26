@@ -22,15 +22,13 @@
     function mediaOnChange(object) {
         key = object.value;
         entity = entities[key];
-        
+
         jQuery("#ita-entity").children().remove();
-//        jQuery(new Option('All', 'all' )).appendTo('#ita-entity');
-        
+
         for ( sub in entity )
         {
             jQuery(new Option(entity[sub]['name'], sub)).appendTo('#ita-entity');
         }
-        jQuery('#ita-entity').attr('disabled','');
     }
 
 </script>
