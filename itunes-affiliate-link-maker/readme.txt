@@ -28,6 +28,8 @@ As of 0.5.3 it now supports search on entities, What does this mean for you?
 * search for movies by artists/studio
 * columns change based on the entity being searched for
 
+As of 0.6 we now ONLY support using the PHG affiliate, which everything seems to be moving to.
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.
@@ -52,11 +54,7 @@ and [itunes url="<storeurl>" title="<alttag>" content="<string>"] outputs the st
 Ok it's not an easy question, i know what goes in them for me and some others, but some of yours are going to be different
 otherwise you're going to be using someone elses affiliate details.  But heres the short version to your answer..
 
-PartnerID - this is your iTunes PartnerId it turns up in your affiliate link as &partnerId=<number> it seems Aussies
-using dgmpro use 1002 and North Americans using Linkshare use 30.
-
-Partner URL - this is everything that goes into your affiliate link thats not the iTunes store link and the partnerId, the settings page
-shows you some examples, please don't use these but use them as a guide to work out what parts of yours to ad.
+Affiliate ID - this is your iTunes/PHP Affiliate ID, you will see it in the top right hand corner when you login to the PHG affiliate area.
 
 = Ok now what? =
 

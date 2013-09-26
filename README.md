@@ -27,6 +27,8 @@ As of 0.5.3 it now supports search on entities, What does this mean for you?
 * search for movies by artists/studio
 * columns change based on the entity being searched for
 
+As of 0.6 we now ONLY support using the PHG affiliate, which everything seems to be moving to.
+
 Using iTalm
 -----------
 
