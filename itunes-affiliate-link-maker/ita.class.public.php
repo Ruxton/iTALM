@@ -55,9 +55,10 @@ class itapub extends itabase
 			{
 				$link = $row->linkUrl;
 				$partnerId = itabase::setting('ita-partner');
-				if(trim($partnerId) != "")
+				$affilateNetwork = itabase::setting('ita-affiliateNetwork');
+				if((trim($partnerId) != "") && trim($affilateNetwork != ""))
 				{
-					$link = $link."&at=".$partnerId;
+					$link = $link."&".$affilateNetwork."=".$partnerId;
 				}
 				add_action('parse_query', array(&$this, 'ita_parse_query'));
 				add_action('parse_request', array(&$this, 'ita_parse_query'));

@@ -297,6 +297,7 @@ class ita extends itabase {
 	function ita_register_settings( )
 	{
 		register_setting('ita-options','ita-partner');
+		register_setting('ita-options','ita-affiliateNetwork');
 		register_setting('ita-options','ita-defaultcountry');
 		register_setting('ita-options','ita-defaultalbfix');
 		register_setting('ita-options','ita-itmslm');

@@ -5,7 +5,7 @@ Plugin URI:		http://ignite.digitalignition.net/articlesexamples/itunes-affiliate
 Description:	Easily create links to the iTunes store with or without affiliate id's
 Author:			Greg Tangey
 Author URI:		http://ignite.digitalignition.net/
-Version:		0.5.3
+Version:		0.6
 */
 
 /*  Copyright 2009  Greg Tangey  (email : greg@digitalignition.net)
@@ -54,11 +54,12 @@ function ita_link($atts, $content = null )
 	$tableName = $wpdb->prefix.'italm';
 	$ita_linkImage = itabase::setting('ita-linkimage');
 	$ita_partnerid = itabase::setting('ita-partner');
+	$ita_affiliateNetwork = itabase::setting('ita-affiliateNetwork');
 	$ita_mask = itabase::setting('ita-maskenable');
 
-	if(trim($ita_partnerid) != "")
+	if( (trim($ita_partnerid) != "") && (trim($ita_affiliateNetwork) != ""))
 	{
-		$ita_partnerid = "&partnerId=".$ita_partnerid;
+		$ita_partnerid = "&".$ita_affiliateNetwork."=".$ita_partnerid;
 	}
 	$return = "";
 

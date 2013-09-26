@@ -31,9 +31,21 @@
     </tr>
 
     <tr valign="top">
+        <th scope="row"><?php _e('Affiliate Network'); ?></th>
+        <td>
+            <select name="ita-affiliateNetwork" class="regular-text">
+                <option value="" DEFAULT>None</option>
+                <option value="at"<?php echo ita::setting('ita-affiliateNetwork') == "at" ? " SELECTED" : ""; ?>>PHG</option>
+                <option value="tdar"<?php echo ita::setting('ita-affiliateNetwork') == "tdar" ? " SELECTED" : ""; ?>>Tradedoubler</option>
+            </select>
+            <br/><span class="setting-desription"><?php _e("The affiliate network you're signed up to"); ?></span>
+        </td>
+    </tr>
+
+    <tr valign="top">
         <th scope="row"><?php _e('Affiliate ID'); ?></th>
         <td><input type="text" name="ita-partner" class="regular-text code" value="<?php echo ita::setting('ita-partner'); ?>"/><br/>
-			<span class="setting-desription"><?php printf( __("The affiliate id, will be meged on the end of the link as <code>&at=%s</code> <em>(The affiliate ID is unique to each affiliate)</em>"),ita::setting('ita-partner') ); ?></span></td>
+			<span class="setting-desription"><?php printf( __("The affiliate id, will be meged on the end of the link as <code>&%s=%s</code> <em>(The affiliate ID is unique to each affiliate)</em>"),ita::setting('ita-affiliateNetwork'),ita::setting('ita-partner') ); ?></span></td>
     </tr>
 
 	<tr valign="top">

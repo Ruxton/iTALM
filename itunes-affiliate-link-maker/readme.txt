@@ -4,7 +4,7 @@ Donate link: http://ignite.digitalignition.net/articlesexamples/itunes-affiliate
 Tags: editor,linking,affiliate,itunes,itunes store,itunes affiliate
 Requires at least: 2.8.1
 Tested up to: 2.8.6
-Stable tag: 0.5.3
+Stable tag: 0.6
 
 The plugin will add a button to the visual editor to run the iTunes Link Generator and offers link masking to hide your affiliate junk.
 
