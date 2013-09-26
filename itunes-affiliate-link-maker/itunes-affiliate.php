@@ -53,7 +53,6 @@ function ita_link($atts, $content = null )
 	global $wpdb;
 	$tableName = $wpdb->prefix.'italm';
 	$ita_linkImage = itabase::setting('ita-linkimage');
-	$ita_prelink = itabase::setting('ita-partnerurl');
 	$ita_partnerid = itabase::setting('ita-partner');
 	$ita_mask = itabase::setting('ita-maskenable');
 
@@ -84,9 +83,9 @@ function ita_link($atts, $content = null )
 
 	if($ita_mask != '1')
 	{
-		if( (trim($ita_prelink) != "") && (trim($ita_partnerid) != "") )
+		if( trim($ita_partnerid) != "" )
 		{
-			$link = $ita_prelink.urlencode($link.trim($ita_partnerid));
+			$link = $link.trim($ita_partnerid);
 		}
 	}
 	else
@@ -101,9 +100,9 @@ function ita_link($atts, $content = null )
 		}
 		else
 		{
-			if( (trim($ita_prelink) != "") && (trim($ita_partnerid) != "") )
+			if(trim($ita_partnerid) != "")
 			{
-				$link = $ita_prelink.urlencode($link.trim($ita_partnerid));
+				$link = $link.trim($ita_partnerid);
 			}
 		}
 	}

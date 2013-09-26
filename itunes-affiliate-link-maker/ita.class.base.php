@@ -13,10 +13,9 @@ class itabase
 
 	//All the default settings that are used when none are stored in wp_options
 	public static $defaultSettings = array(
-		"ita-version" => "0.5.3",
+		"ita-version" => "0.6",
 		"ita-country" => "AU",
 		"ita-partner" => "",
-		"ita-partnerurl" => "",
 		"ita-defaultalbfix" => "1",
 		"ita-itmslm" => "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsSearch?WOURLEncoding=ISO8859_1",
 		"ita-defaultmedia" => "all",

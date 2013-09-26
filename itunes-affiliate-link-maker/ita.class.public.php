@@ -54,12 +54,10 @@ class itapub extends itabase
 			else
 			{
 				$link = $row->linkUrl;
-				$partnerStuff = itabase::setting('ita-partnerurl');
 				$partnerId = itabase::setting('ita-partner');
-				if( (trim($partnerStuff) != "") && (trim($partnerId) != "")  )
+				if(trim($partnerId) != "")
 				{
-					$link = $link."&partnerId=".$partnerId;
-					$link = $partnerStuff.urlencode($link);
+					$link = $link."&at=".$partnerId;
 				}
 				add_action('parse_query', array(&$this, 'ita_parse_query'));
 				add_action('parse_request', array(&$this, 'ita_parse_query'));
