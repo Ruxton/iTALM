@@ -2,18 +2,8 @@
 
 /**
  * This script when ran with WordPress (the plugin will take care of that) will
- * upgrade your datbase from version 0.4 or so of iTALM to an 0.5+ style DB
+ * upgrade your datbase from version 0.5.3 of iTALM to an 0.6 style DB
  */
-
-$partnerStuff = itabase::setting('ita-partner');
-$temp = split('&', $partnerStuff);
-array_shift($temp);
-$options = array();
-foreach ($temp as $option) {
-    $res = split('=', $option);
-    $name = $res[0];
-    $options[$name] = ($name == "partnerUrl") ? urldecode($res[1]) : $res[1];
-}
 
 // If proceed has been submitted
 if (isset($_GET['proceed'])) {
@@ -21,7 +11,8 @@ if (isset($_GET['proceed'])) {
     $token = get_option('italm-upgrade-token', '');
 
     if (trim($token) != "" && $_GET['proceed'] == $token) {
-        $version="0.5.3";
+        $version = "0.6";
+        delete_option('italm-partner-url');
         update_option('ita-version', $version);
         $wpdb->query($wpdb->prepare("DELETE FROM wp_options WHERE option_name = %s;", 'italm-upgrade-token'));
         include ita_getDisplayTemplate('dbupgrade/upgrade-SUCCESS.php');
@@ -38,6 +29,6 @@ if (isset($_GET['proceed'])) {
 else {
     $tokenval = md5(time() . get_option('siteurl'));
     update_option('italm-upgrade-token', $tokenval);
-    include ita_getDisplayTemplate('dbupgrades/upgrade-0.5.3.php');
+    include ita_getDisplayTemplate('dbupgrades/upgrade-0.6.php');
 }
 ?>
