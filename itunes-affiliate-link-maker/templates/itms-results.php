@@ -29,27 +29,47 @@
       <th scope="col">
         <?php echo $colName; ?>
       </th>
-    <?php endfor; ?>
+    <?php endforeach; ?>
   </tr>
   <?php foreach($resArr as $result) : ?>
     <tr>
     <?php foreach( $columns as $key => $column ) : ?>
       <?php
         if( $key == "Name" || $key == "Artist" || $key == "Track Name" || $key == "Album Name" || $key == "Developer" )
+        {
           $width = ' width="180"';
+        }
         else
+        {
           $width = '';
-        $output = preg_replace('/\{([A-Za-z0-9\[\]]+)}/e',"\$result->\\1",$column);
+        }
+        $matcher = "";
+        $output = $column;
+        preg_match_all("/onClick=\".*;\"/", $column, $columnJS);
+        if($col = $columnJS[0]) {
+          if($col = $col[0]) {
+            preg_match_all('/\{([A-Za-z0-9\[\]]+)}/e',$col,$matches);
+            $matcher = $col;
+            foreach($matches[1] as $match) {
+              $escaped = addslashes($result->$match);
+              $preg = "/\{$match\}/";
+              $col = preg_replace($preg,$escaped,$col);
+            }
+            $output = str_replace($matcher,$col,$output);
+          }
+        }
+
+        $output = preg_replace('/\{([A-Za-z0-9\[\]]+)}/e',"\$result->\${1}",$output);
+
       ?>
       <td<?php echo $width; ?>>
         <?php echo $output; ?>
       </td>
-    <?php endfor; ?>
+    <?php endforeach; ?>
     </tr>
     <?php $i == 0 ? $i = 1 : $i = 0; ?>
-  <?php endfor;?>
+  <?php endforeach;?>
 <?php endif; ?>
-?>
 </table>
     </div>
 </body>
