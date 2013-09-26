@@ -21,8 +21,9 @@ if (isset($_GET['proceed'])) {
     $token = get_option('italm-upgrade-token', '');
 
     if (trim($token) != "" && $_GET['proceed'] == $token) {
-        update_option('ita-version', '0.5.3');
-        include ita_getDisplayTemplate('dbupgrade/upgrade-0.5.3_SUCCESS.php');
+        $version="0.5.3";
+        update_option('ita-version', $version);
+        include ita_getDisplayTemplate('dbupgrade/upgrade-SUCCESS.php');
     }
 
     // Display a notice if the proceed token isn't correct
