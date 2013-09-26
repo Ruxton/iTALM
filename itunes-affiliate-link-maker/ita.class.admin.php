@@ -73,14 +73,14 @@ class ita extends itabase {
     /**
      * Upgrades the database from previous versions to the current db version.
      * Shouldn't enter this function unless offered an upgrade from above functions.
-     * 
+     *
      * @global $wpdb $wpdb
      */
 	function italm_upgrade( )
 	{
 		global $wpdb;
 		$tableName = $wpdb->prefix.'italm';
-		
+
         $version = floatval(itabase::setting('ita-version'));
 
 
@@ -92,6 +92,10 @@ class ita extends itabase {
         elseif( $version >= floatval('0.1') && $version < floatval('0.5.3') )
         {
             include WP_PLUGIN_DIR . "/itunes-affiliate-link-maker/dbupgrades/0.5.3.php";
+        }
+        elseif( $version >= floatval('0.5.3') && $version < floatval('0.6') )
+        {
+            include WP_PLUGIN_DIR . "/itunes-affiliate-link-maker/dbupgrades/0.6.php";
         }
         else
         {
@@ -108,7 +112,7 @@ class ita extends itabase {
 	function italm_update_link( )
 	{
 		global $wpdb;
-		
+
 		$tableName = $wpdb->prefix . 'italm';
 
 		$linkUrl = $_POST['linkurl'];
@@ -120,7 +124,7 @@ class ita extends itabase {
      * Function handles the response from the popup windows search request, the
      * function name italm_ajax_it is a little misleading as there is no longer
      * any ajax stuff going on.
-     * 
+     *
      * @global  $wpdb
      */
 	function italm_ajax_it( )
@@ -134,7 +138,7 @@ class ita extends itabase {
 		$linkImage = isset( $_POST['linkimage'] ) ? $_POST['linkimage'] : '';
 
 		$linkResult = $wpdb->get_row('SELECT * FROM '.$tableName.' WHERE linkUrl = \''.$linkUrl.'\';', ARRAY_A);
-		
+
 		$maskedUrl = get_option('siteurl').'/'.ita::setting('ita-maskurl').'/%s';
 
 		if(sizeof($linkResult) < 1 )
@@ -202,7 +206,7 @@ class ita extends itabase {
 			$option_name = $key;
 			$wpdb->query( $wpdb->prepare( "DELETE FROM wp_options WHERE option_name = %s;",$option_name ) );
 		}
-		
+
 		if($wpdb->get_var("SHOW TABLES LIKE '$tableName'") == $tableName)
 		{
 			$sql = "DROP TABLE " . $tableName . ";";
@@ -234,14 +238,14 @@ class ita extends itabase {
 		if( isset( $_POST['ita-omg'] ) || isset( $_GET['ita-omg'] ) )
 		{
 			$tableName = $wpdb->prefix.'italm';
-			
+
 			$page = 0;
 			$perPage = 20;
 			if(isset($_GET['ita-pg']))
 			    $page = intval($_GET['ita-pg'])-1;
 
 			$pageLimit = $page*$perPage;
-			
+
 			if(! isset( $_POST['ita-term'] ) || $_POST['ita-term'] == "" )
 			{
 					$queryRes = $wpdb->get_results('SELECT * FROM '.$tableName.' ORDER BY updateTime DESC LIMIT '.$pageLimit.','.$perPage,OBJECT );
@@ -293,7 +297,6 @@ class ita extends itabase {
 	function ita_register_settings( )
 	{
 		register_setting('ita-options','ita-partner');
-		register_setting('ita-options','ita-partnerurl');
 		register_setting('ita-options','ita-defaultcountry');
 		register_setting('ita-options','ita-defaultalbfix');
 		register_setting('ita-options','ita-itmslm');
@@ -340,7 +343,7 @@ class ita extends itabase {
         $pagination->setCurrentPage(-1);
         $pagination->setMaxItems(20);
         $pagination->linksFormat('', ',', '');
-        
+
         include ita_getDisplayTemplate('ita-admin-popup.html');
 	}
 
