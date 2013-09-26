@@ -17,12 +17,9 @@ class itms {
         "movie" => "Movies",
         "shortFilm" => "Short Films",
         "tvShow" => "TV Shows",
-        "musicVideo" => "Music Videos",
         "audiobook" => "Audiobooks",
-        "software" => "iOS Apps",
-        "macSoftware" => "Mac Apps",
-        "podcast" => "Podcasts",
-        "iTunesU" => "iTunes U",
+        "software" => "Software",
+        "podcast" => "Podcasts"
     );
 
     // Timeout variable for remote connection to App Store API
@@ -37,256 +34,248 @@ class itms {
 
 
 	public static $entities = array (
-    "software" => array(
-        "allTrack" => array(
-            "name" => "Everything",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Track Name" => self::TRACK_VIEW,
-                "Release" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Preview" => self::PREVIEW_LINK
-            )
-        ),
-        "softwareDeveloper" => array (
-            "name" => "Developer",
-            "columns" => array(
-                "Name" => self::ARTIST_LINK
-            )
-        ),
         "software" => array(
-            "name" => "iPhone Apps",
-            "columns" => array(
-                "Name" => self::TRACK_VIEW,
-                "Developer" => self::ARTIST_VIEW,
-                "Category" => "{genres[0]}",
-                "Date" => "{releaseDate}",
-            )
+            "allTrack" => array(
+                "name" => "Everything",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+            "software" => array(
+                "name" => "iPhone Apps",
+                "columns" => array(
+                    "Name" => self::TRACK_VIEW,
+                    "Developer" => self::ARTIST_VIEW,
+                    "Category" => "{genres[0]}",
+                    "Date" => "{releaseDate}",
+                )
+            ),
+            "iPadSoftware" => array (
+                "name" => "iPad Apps",
+                "columns" => array(
+                    "Name" => self::TRACK_VIEW,
+                    "Developer" => self::ARTIST_VIEW,
+                    "Category" => "{genres[0]}",
+                    "Date" => "{releaseDate}",
+                )
+            ),
+            "macSoftware" => array(
+                "name" => "Mac Apps",
+                "columns" => array(
+                    "Name" => self::TRACK_VIEW,
+                    "Developer" => self::ARTIST_VIEW,
+                    "Category" => "{genres[0]}",
+                    "Date" => "{releaseDate}",
+                )
+            ),
         ),
-        "iPadSoftware" => array (
-            "name" => "iPad Apps",
-            "columns" => array(
-                "Name" => self::TRACK_LINK,
-                "Developer" => self::ARTIST_VIEW,
-                "Category" => "{genres[0]}",
-                "Date" => "{releaseDate}",
+    	"music" => array(
+    	   "allTrack" => array(
+                "name" => "All Tracks",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"musicArtist" => array(
+                "name" => "Artist",
+                "columns" => array(
+                    "Name" => self::ARTIST_LINK,
+                    "Genre" => "{primaryGenreName}"
+                )
+            ),
+    		"musicTrack" => array(
+                "name" => "Track",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"album" => array(
+                "name" => "Album",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Album Name" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Date" => "{releaseDate}"
+                )
+            ),
+    		"musicVideo" => array(
+                "name" => "Music Video",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"mix" => array(
+                "name" => "iTunes Mix",
+                "columns" => array(
+                    "Mix Title" => "<a href=\"{collectionViewUrl}\" onClick=\"return italm_sendToEditor('{title}','{collectionViewUrl}',italmLinkImage);\">{title}</a>",
+                    "Artist" => "{artistName}"
+                )
             )
-        )
-    ),
-    "macSoftware" => array(
-      "" => array (
-        "name" => "",
-        "columns" => array(
-          "Name" => '',
-          "Developer" => '',
-          "Category" => '',
-          "Date" => '',
-        )
-      )
-    ),
-	"music" => array(
-	   "allTrack" => array(
-            "name" => "All Tracks",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Track Name" => self::TRACK_VIEW,
-                "Release" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Preview" => self::PREVIEW_LINK
+    	),
+    	"movie" => array(
+    		"movieArtist" => array(
+                "name" => "Movie Artist",
+                "columns" => array(
+                    "Artist" => self::ARTIST_LINK,
+                    "Primary Genre" => "{primaryGenreName}"
+                )
+            ),
+    		"movie" => array(
+                "name" => "Movie",
+                "columns" => array(
+                    "Name" => self::TRACK_VIEW,
+                    "Studio" => self::ARTIST_VIEW,
+                    "Preview" => self::PREVIEW_LINK
+                )
             )
-        ),
-		"musicArtist" => array(
-            "name" => "Artist",
-            "columns" => array(
-                "Name" => self::ARTIST_LINK,
-                "Genre" => "{primaryGenreName}"
+    	),
+    	"podcast" => array(
+            "podcast" => array(
+                "name" => "Podcast",
+                "columns" => array(
+                    "Podcast" => self::TRACK_VIEW,
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+            "podcastAuthor" => array(
+                "name" => "Podcast Author",
+                "columns" => array(
+                    "Name" => self::ARTIST_VIEW,
+                )
             )
-        ),
-		"musicTrack" => array(
-            "name" => "Track",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Track Name" => self::TRACK_VIEW,
-                "Release" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Preview" => self::PREVIEW_LINK
+    	),
+    	"audiobook" => array(
+            "audiobook" => array(
+                "name" => "Audiobook",
+                "columns" => array(
+                    "Name" => self::COLLECTION_VIEW,
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+            "audiobookAuthor" => array(
+                "name" => "Author",
+                "columns" => array(
+                    "Name" => self::ARTIST_LINK,
+                )
             )
-        ),
-		"album" => array(
-            "name" => "Album",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Album Name" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Date" => "{releaseDate}"
+    	),
+    	"shortFilm" => array(
+            "shortFilm" => array(
+                "name" => "Short Film",
+                "columns" => array(
+                    "Name" => self::TRACK_VIEW
+                )
+            ),
+    		"shortFilmArtist" => array(
+                "name" => "Studio",
+                "columns" => array(
+                    "Studio" =>  self::ARTIST_LINK
+                )
             )
-        ),
-		"musicVideo" => array(
-            "name" => "Music Video",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Track Name" => self::TRACK_VIEW,
-                "Release" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Preview" => self::PREVIEW_LINK
+    	),
+    	"tvShow" => array(
+    		"tvEpisode" => array(
+                "name" => "TV Episode",
+                "columns" => array(
+                    "Show" => self::ARTIST_VIEW,
+                    "Season" => self::COLLECTION_VIEW,
+                    "Episode" => self::TRACK_VIEW,
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"tvSeason" => array(
+                "name" => "TV Season",
+                "columns" => array(
+                    "Show" => self::ARTIST_VIEW,
+                    "Season" => self::COLLECTION_VIEW
+                )
             )
-        ),
-		"mix" => array(
-            "name" => "iTunes Mix",
-            "columns" => array(
-                "Mix Title" => "<a href=\"{collectionViewUrl}\" onClick=\"return italm_sendToEditor('{title}','{collectionViewUrl}',italmLinkImage);\">{title}</a>",
-                "Artist" => "{artistName}"
-            )
-        )
-	),
-	"movie" => array(
-		"movieArtist" => array(
-            "name" => "Movie Artist",
-            "columns" => array(
-                "Artist" => self::ARTIST_LINK,
-                "Primary Genre" => "{primaryGenreName}"
-            )
-        ),
-		"movie" => array(
-            "name" => "Movie",
-            "columns" => array(
-                "Name" => self::TRACK_VIEW,
-                "Studio" => self::ARTIST_VIEW,
-                "Preview" => self::PREVIEW_LINK
-            )
-        )
-	),
-	"podcast" => array(
-		"podcastAuthor" => array(
-            "name" => "Podcast Author",
-            "columns" => array(
-                "Name" => self::ARTIST_VIEW,
-            )
-        ),
-		"podcast" => array(
-            "name" => "Podcast",
-            "columns" => array(
-                "Podcast" => self::TRACK_VIEW,
-                "Preview" => self::PREVIEW_LINK
-            )
-        )
-	),
-	"audiobook" => array(
-		"audiobookAuthor" => array(
-            "name" => "Author",
-            "columns" => array(
-                "Name" => self::ARTIST_LINK,
-            )
-        ),
-		"audiobook" => array(
-            "name" => "Audiobook",
-            "columns" => array(
-                "Name" => self::COLLECTION_VIEW,
-                "Preview" => self::PREVIEW_LINK
-            )
-        )
-	),
-	"shortFilm" => array(
-		"shortFilmArtist" => array(
-            "name" => "Studio",
-            "columns" => array(
-                "Studio" =>  self::ARTIST_LINK
-            )
-        ),
-		"shortFilm" => array(
-            "name" => "Short Film",
-            "columns" => array(
-                "Name" => self::TRACK_VIEW
-            )
-        )
-	),
-	"tvShow" => array(
-		"tvEpisode" => array(
-            "name" => "TV Episode",
-            "columns" => array(
-                "Show" => self::ARTIST_VIEW,
-                "Season" => self::COLLECTION_VIEW,
-                "Episode" => self::TRACK_VIEW,
-                "Preview" => self::PREVIEW_LINK
-            )
-        ),
-		"tvSeason" => array(
-            "name" => "TV Season",
-            "columns" => array(
-                "Show" => self::ARTIST_VIEW,
-                "Season" => self::COLLECTION_VIEW
-            )
-        )
-	),
-	"all" => array(
-
-  		"allTrack" => array(
-            "name" => "All Tracks",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Track Name" => self::TRACK_VIEW,
-                "Release" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Preview" => self::PREVIEW_LINK
-            )
-        ),
-		"movie" => array(
-            "name" => "Movie Title",
-            "columns" => array(
-                "Name" => self::TRACK_VIEW,
-                "Studio" => self::ARTIST_VIEW,
-                "Preview" => self::PREVIEW_LINK
-            )
-        ),
-		"album" => array(
-            "name" => "Album Title",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Album Name" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Date" => "{releaseDate}"
-            )
-        ),
-		"allArtist" => array(
-            "name" => "Artists",
-            "columns" => array(
-                "Name" => self::ARTIST_LINK,
-                "Genre" => "{primaryGenreName}"
-            )
-        ),
-		"podcast" => array(
-            "name" => "Podcasts",
-            "columns" => array(
-                "Podcast" => self::TRACK_VIEW,
-                "Preview" => self::PREVIEW_LINK
-            )
-        ),
-		"musicVideo" => array(
-            "name" => "Music Video",
-            "columns" => array(
-                "Artist" => self::ARTIST_VIEW,
-                "Track Name" => self::TRACK_VIEW,
-                "Release" => self::COLLECTION_VIEW,
-                "Genre" => "{primaryGenreName}",
-                "Preview" => self::PREVIEW_LINK
-            )
-        ),
-		"mix" => array(
-            "name" => "iTunes Mix",
-            "columns" => array(
-                "Name" => "<a href=\"{}\">{}</a>",
-            )
-        ),
-		"audiobook" => array(
-            "name" => "Audiobook",
-            "columns" => array(
-                "Name" => "<a href=\"{}\">{}</a>",
-            )
-        ),
-		"tvSeason" => array(
-            "name" => "TV Season",
-            "columns" => array(
-                "Name" => "<a href=\"{}\">{}</a>",
+    	),
+    	"all" => array(
+      		"allTrack" => array(
+                "name" => "All Tracks",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"movie" => array(
+                "name" => "Movie Title",
+                "columns" => array(
+                    "Name" => self::TRACK_VIEW,
+                    "Studio" => self::ARTIST_VIEW,
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"album" => array(
+                "name" => "Album Title",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Album Name" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Date" => "{releaseDate}"
+                )
+            ),
+    		"allArtist" => array(
+                "name" => "Artists",
+                "columns" => array(
+                    "Name" => self::ARTIST_LINK,
+                    "Genre" => "{primaryGenreName}"
+                )
+            ),
+    		"podcast" => array(
+                "name" => "Podcasts",
+                "columns" => array(
+                    "Podcast" => self::TRACK_VIEW,
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"musicVideo" => array(
+                "name" => "Music Video",
+                "columns" => array(
+                    "Artist" => self::ARTIST_VIEW,
+                    "Track Name" => self::TRACK_VIEW,
+                    "Release" => self::COLLECTION_VIEW,
+                    "Genre" => "{primaryGenreName}",
+                    "Preview" => self::PREVIEW_LINK
+                )
+            ),
+    		"mix" => array(
+                "name" => "iTunes Mix",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+    		"audiobook" => array(
+                "name" => "Audiobook",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
+            ),
+    		"tvSeason" => array(
+                "name" => "TV Season",
+                "columns" => array(
+                    "Name" => "<a href=\"{}\">{}</a>",
+                )
             )
         )
 	);
@@ -389,9 +378,9 @@ class itms {
 		 $this->source = itabase::setting('ita-itmslm');
 	}
 
-	public function getResults( $term = "", $media = "all", $country = 'AU', $entity = '' )
+	public function getResults( $term = "", $media = "all", $country = 'AU', $entity = '', $attribute = '' )
 	{
-		$queryvars = $this->buildQueryVars( $term, $media, $country, $entity );
+		$queryvars = $this->buildQueryVars( $term, $media, $country, $entity, $attribute );
 		$url = $this->source.$queryvars;
 
 		$results = wp_remote_get( $url, array( 'timeout' => itms::__REMOTE_TIMEOUT ) );
@@ -399,23 +388,31 @@ class itms {
 			return new WP_Error( 'italm', __( 'Can\'t retrieve a result for your search' ) );
 
 		$results = wp_remote_retrieve_body( $results );
-		//$results = file_get_contents($url);
 
 		$arr = json_decode($results);
-//		var_dump($arr);
-//		exit;
 		return $arr;
 	}
 
-	private function buildQueryVars($term,$media,$country,$entity )
+	private function buildQueryVars($term,$media,$country,$entity,$attribute="")
 	{
 		$limit = "";
+
+        ## TODO: Remove when Search API bug fixed.
+        if($entity == "macSoftware") {
+            $media = "";
+            $attribute = "allTrackTerm";
+        }
 
 		if(itabase::setting('ita-searchlimit') != itabase::$defaultSettings['ita-searchlimit'] )
 			$limit = "&limit=".itabase::setting('ita-searchlimit');
                 if(trim($entity != ''))
                     $entity = "&entity=".$entity;
-		return "&country=".$country."&term=".urlencode($term)."&media=".$media.$entity.$limit;
+                if(trim($attribute != ''))
+                    $attribute = "&attribute=".$attribute;
+                if(trim($media != ''))
+                    $media = "&media=".$media;
+
+		return "&country=".$country."&term=".urlencode($term).$media.$entity.$attribute.$limit;
 	}
 }
 ?>
