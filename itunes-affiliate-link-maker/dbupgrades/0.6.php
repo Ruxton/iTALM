@@ -15,7 +15,7 @@ if (isset($_GET['proceed'])) {
         delete_option('italm-partner-url');
         update_option('ita-version', $version);
         $wpdb->query($wpdb->prepare("DELETE FROM wp_options WHERE option_name = %s;", 'italm-upgrade-token'));
-        include ita_getDisplayTemplate('dbupgrade/upgrade-SUCCESS.php');
+        include ita_getDisplayTemplate('dbupgrades/upgrade-SUCCESS.php');
     }
 
     // Display a notice if the proceed token isn't correct
