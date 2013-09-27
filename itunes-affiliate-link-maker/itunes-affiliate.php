@@ -5,7 +5,7 @@ Plugin URI:   http://ignite.digitalignition.net/articlesexamples/itunes-affiliat
 Description:  Easily create links to the iTunes store with or without affiliate id's
 Author:       Greg Tangey
 Author URI:   http://ignite.digitalignition.net/
-Version:      0.6
+Version:      0.6.1
 */
 
 /*  Copyright 2009  Greg Tangey  (email : greg@digitalignition.net)
