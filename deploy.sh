@@ -59,7 +59,7 @@ echo "Creating local copy of SVN repo ..."
 svn co $SVNURL $SVNPATH
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
-cp -R $PLUGINSLUG/* $SVNPATH/trunk/
+cp -R * $SVNPATH/trunk/
 
 echo "Ignoring github specific files and deployment script"
 svn propset svn:ignore "deploy.sh
