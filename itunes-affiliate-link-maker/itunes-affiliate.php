@@ -122,7 +122,7 @@ function ita_link($atts, $content = null )
 
 add_shortcode('itunes', 'ita_link');
 
-if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
+if (preg_match('/\/wp-admin\//', $_SERVER['REQUEST_URI'])) { // just load in admin
     wp_enqueue_script( 'jquery-ui-dialog' );
     wp_enqueue_style( 'ita-jquery-ui', plugins_url('/itunes-affiliate-link-maker/ita-jquery-ui.css'), array(), '0.11', 'screen' );
     require_once(dirname(__FILE__).'/ita.class.admin.php');
