@@ -353,13 +353,20 @@ class ita extends itabase {
 	 */
 	function ita_menus( )
 	{
-		$page = add_options_page('iTunes Affiliate Link Maker', 'iTALM', 8, __FILE__, array(&$this,'ita_settings_page') );
+		add_options_page('iTunes Affiliate Link Maker', 'iTALM', 8, __FILE__, array(&$this,'ita_settings_page') );
+		add_menu_page('iTunes Affiliate Link Maker History', 'iTALM History', 'edit_posts', __FILE__, array(&$this,'ita_admin_history') );
 		add_action( 'admin_print_scripts',array(&$this,'ita_admin_head'));
 	}
 
 	function ita_admin_head( )
 	{
 		wp_enqueue_script('ita-settings',plugins_url('itunes-affiliate-link-maker/ita-settings.js'));
+	}
+
+	function ita_admin_history()
+	{
+    require_once(dirname(__FILE__).'/libs/italm_list_table.php');
+		include ita_getDisplayTemplate('ita-admin-history.html');
 	}
 
 	/**
