@@ -18,6 +18,8 @@ class ita extends itabase {
 		add_action('wp_ajax_italm_update_link', array(&$this,'italm_update_link') );
 		add_action( 'edit_form_advanced', array(&$this, 'italm_quicktags') );
 		add_action( 'edit_page_form', array(&$this, 'italm_quicktags') );
+		add_filter('set-screen-option', array(&$this,'ita_set_screen_option'), 10, 3);
+
 		wp_enqueue_script('sack');
 	}
 
@@ -353,8 +355,9 @@ class ita extends itabase {
 	 */
 	function ita_menus( )
 	{
-		add_options_page('iTunes Affiliate Link Maker', 'iTALM', 8, __FILE__, array(&$this,'ita_settings_page') );
-		add_menu_page('iTunes Affiliate Link Maker History', 'iTALM History', 'edit_posts', __FILE__, array(&$this,'ita_admin_history') );
+		add_options_page('iTunes Affiliate Link Maker', 'iTALM', 8, "italm-settings", array(&$this,'ita_settings_page') );
+		$history = add_menu_page('iTunes Affiliate Link Maker History', 'iTALM History', 'edit_posts', 'italm-history', array(&$this,'ita_admin_history'));
+		add_action("load-$history", array(&$this, 'ita_admin_history_options'));
 		add_action( 'admin_print_scripts',array(&$this,'ita_admin_head'));
 	}
 
@@ -365,8 +368,28 @@ class ita extends itabase {
 
 	function ita_admin_history()
 	{
-    require_once(dirname(__FILE__).'/libs/italm_list_table.php');
+		global $italmListTable;
 		include ita_getDisplayTemplate('ita-admin-history.html');
+	}
+
+	function ita_admin_history_options()
+	{
+		global $italmListTable;
+    require_once(dirname(__FILE__).'/libs/italm_list_table.php');
+
+		$options = 'per_page';
+		$args = array(
+			'label' => 'Items',
+			'default' => 10,
+			'option' => 'ita_per_page'
+		);
+
+		add_screen_option($options,$args);
+		$italmListTable = new ITALM_List_Table();
+	}
+
+	function ita_set_screen_option($status, $option, $value) {
+		return $value;
 	}
 
 	/**

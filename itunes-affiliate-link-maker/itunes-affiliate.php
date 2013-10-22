@@ -121,21 +121,20 @@ function ita_link($atts, $content = null )
 }
 
 add_shortcode('itunes', 'ita_link');
-
 if (preg_match('/\/wp-admin\//', $_SERVER['REQUEST_URI'])) { // just load in admin
-    wp_enqueue_script( 'jquery-ui-dialog' );
-    wp_enqueue_style( 'ita-jquery-ui', plugins_url('/itunes-affiliate-link-maker/ita-jquery-ui.css'), array(), '0.11', 'screen' );
-    require_once(dirname(__FILE__).'/ita.class.admin.php');
+  wp_enqueue_script( 'jquery-ui-dialog' );
+  wp_enqueue_style( 'ita-jquery-ui', plugins_url('/itunes-affiliate-link-maker/ita-jquery-ui.css'), array(), '0.11', 'screen' );
+  require_once(dirname(__FILE__).'/ita.class.admin.php');
 
   $ita =& new ita();
 
-    if(ita::setting('ita-cleanup') == '1')
-    register_deactivation_hook(__FILE__, array(&$ita,'italm_deactivate'));
+  if(ita::setting('ita-cleanup') == '1') {
+    register_deactivation_hook(WP_PLUGIN_DIR . '/itunes-affiliate-link-maker/itunes-affiliate.php', array(&$ita,'italm_deactivate'));
+  }
 
-  register_uninstall_hook(__FILE__,array(&$ita,'italm_uninstall'));
-  register_activation_hook(__FILE__,array(&$ita,'italm_install'));
-
-  $plugin_dir = basename(dirname(__FILE__));
+  register_uninstall_hook(WP_PLUGIN_DIR . '/itunes-affiliate-link-maker/itunes-affiliate.php',array(&$ita,'italm_uninstall'));
+  register_activation_hook(WP_PLUGIN_DIR . '/itunes-affiliate-link-maker/itunes-affiliate.php',array(&$ita,'italm_install'));
+  $plugin_dir = basename(dirname(WP_PLUGIN_DIR . '/itunes-affiliate-link-maker/itunes-affiliate.php'));
   load_plugin_textdomain( 'italm', '', $plugin_dir );
 }
 else

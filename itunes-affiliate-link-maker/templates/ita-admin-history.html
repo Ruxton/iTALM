@@ -1,10 +1,16 @@
 <div class="wrap">
 <h2>iTunes Affiliate Link Maker</h2>
 
+<form method="post">
+  <input type="hidden" name="page" value="italm-history" />
+  <?php $italmListTable->search_box('search', 'search_id'); ?>
+
+
 <?php
-  $italmListTable = new ITALM_List_Table();
   $italmListTable->prepare_items();
   $italmListTable->display();
 ?>
+
+</form>
 
 </div>
